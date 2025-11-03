@@ -33,7 +33,12 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <AppBar position="sticky" color="inherit" elevation={1}>
+      <AppBar
+        position="sticky"
+        color="inherit"
+        elevation={1}
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           {/* Left: Store icon + name */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
