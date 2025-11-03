@@ -24,7 +24,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        mb: -2.8,
+        mb: 1,
       }}
     >
       <Box>
