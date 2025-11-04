@@ -1,4 +1,3 @@
-// src/components/layout/Header.tsx
 import React, { useState } from "react";
 import {
   AppBar,
@@ -10,11 +9,13 @@ import {
   Collapse,
   useMediaQuery,
   useTheme,
+  Badge,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { Link } from "react-router-dom";
 import { useThemeContext } from "../../context/theme-context";
 
@@ -30,6 +31,9 @@ const Header: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // 🔹 Temporary cart count (you can replace it later with context or Redux)
+  const cartCount = 3;
 
   return (
     <>
@@ -55,9 +59,11 @@ const Header: React.FC = () => {
             </Typography>
           </Box>
 
+          {/* Right Section */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            {!isMobile && (
+            {!isMobile ? (
               <>
+                {/* Navigation Links */}
                 {navItems.slice(0, 3).map((item) => (
                   <Button
                     key={item.label}
@@ -69,6 +75,8 @@ const Header: React.FC = () => {
                     {item.label}
                   </Button>
                 ))}
+
+                {/* Login Button */}
                 <Button
                   component={Link}
                   to="/login"
@@ -77,17 +85,31 @@ const Header: React.FC = () => {
                 >
                   Login
                 </Button>
+
+                {/* 🔹 Cart Icon with Badge */}
+                <IconButton
+                  component={Link}
+                  to="/cart"
+                  color="inherit"
+                  sx={{ ml: 1 }}
+                >
+                  <Badge
+                    badgeContent={cartCount}
+                    color="error"
+                    overlap="rectangular"
+                  >
+                    <ShoppingCartOutlinedIcon />
+                  </Badge>
+                </IconButton>
+
+                {/* Theme Toggle */}
                 <IconButton color="inherit" onClick={toggle} sx={{ ml: 1 }}>
                   {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
               </>
-            )}
-
-            {isMobile && (
+            ) : (
               <>
-                {/* <IconButton color="inherit" onClick={toggle}>
-                  {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
-                </IconButton> */}
+                {/* Mobile Menu Icon */}
                 <IconButton
                   color="inherit"
                   onClick={() => setMenuOpen((prev) => !prev)}
@@ -127,6 +149,29 @@ const Header: React.FC = () => {
                   {item.label}
                 </Button>
               ))}
+
+              {/* 🔹 Cart Button (inside mobile menu) */}
+              <Button
+                component={Link}
+                to="/cart"
+                onClick={() => setMenuOpen(false)}
+                sx={{
+                  justifyContent: "flex-start",
+                  textTransform: "none",
+                  px: 3,
+                  py: 1.5,
+                  color: theme.palette.text.primary,
+                }}
+                startIcon={
+                  <Badge badgeContent={cartCount} color="error">
+                    <ShoppingCartOutlinedIcon />
+                  </Badge>
+                }
+              >
+                Cart
+              </Button>
+
+              {/* Theme Toggle */}
               <Button
                 onClick={toggle}
                 sx={{
