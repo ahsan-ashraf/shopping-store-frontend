@@ -161,10 +161,7 @@ const Home: React.FC = () => {
 
       {/* Recommended / Just For You Section */}
       <Box sx={{ mt: 6 }}>
-        <SectionHeader
-          title="Just For You"
-          subtitle="Recommended products for you"
-        />
+        <SectionHeader title="Just For You" />
         <Grid container spacing={2}>
           {sampleProducts.slice(0, visibleRecommendations).map((product) => (
             <Grid key={product.id} size={{ xs: 12, sm: 6, md: 4, lg: 2 }}>
