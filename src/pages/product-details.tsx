@@ -17,7 +17,6 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import StarIcon from "@mui/icons-material/Star";
 import AppButton from "../components/ui/app-button";
 
 const reviews = [

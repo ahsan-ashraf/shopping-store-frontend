@@ -1,4 +1,3 @@
-// src/pages/cart.tsx
 import React, { useState } from "react";
 import {
   Box,
@@ -77,31 +76,22 @@ const Cart: React.FC = () => {
     setSelectedIds([]);
   };
 
-  // Calculate subtotal, delivery charges, total
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-  const deliveryCharges = subtotal > 0 ? 500 : 0; // example
+  const deliveryCharges = subtotal > 0 ? 500 : 0;
   const total = subtotal + deliveryCharges;
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <SectionHeader title="Shopping Cart" />
 
-      <Box display="flex" gap={3} flexDirection={{ xs: "column", md: "row" }}>
-        {/* Left Column: Cart Items (70% width) */}
-        <Box flex={{ xs: 1, md: 1 }}>
-          {/* Action Bar */}
+      <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={3}>
+        {/* Left Column: Cart Items */}
+        <Box flex={1} width="100%">
           {cartItems.length > 0 && (
-            <Paper
-              elevation={3}
-              sx={{
-                p: 1,
-                mb: 1.5,
-                borderRadius: 1,
-              }}
-            >
+            <Paper elevation={3} sx={{ p: 1, mb: 1.5, borderRadius: 1 }}>
               <Box
                 display="flex"
                 alignItems="center"
@@ -146,7 +136,7 @@ const Cart: React.FC = () => {
               </Box>
             </Paper>
           )}
-          {/* Cart Items List */}
+
           <Paper elevation={3} sx={{ p: 2, borderRadius: 1 }}>
             {cartItems.length > 0 ? (
               cartItems.map((item) => (
@@ -183,13 +173,13 @@ const Cart: React.FC = () => {
           </Paper>
         </Box>
 
-        {/* Right Column: Order Summary (30% width) */}
+        {/* Right Column: Order Summary */}
         <Paper
           elevation={3}
           sx={{
             p: 2,
             borderRadius: 1,
-            width: { xs: "100%", md: 0.3 },
+            width: { xs: "100%", md: "30%" },
             flexShrink: 0,
             height: "fit-content",
           }}

@@ -1,4 +1,3 @@
-// src/components/product-item.tsx
 import React from "react";
 import {
   Box,
@@ -70,6 +69,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         alignItems="center"
         justifyContent="space-between"
         py={1.5}
+        flexWrap="wrap"
       >
         {/* Checkbox */}
         <Checkbox
@@ -79,40 +79,57 @@ const ProductItem: React.FC<ProductItemProps> = ({
         />
 
         {/* Image + Info */}
-        <Box display="flex" alignItems="center" flexGrow={1} ml={1}>
+        <Box
+          display="flex"
+          alignItems="center"
+          flexGrow={1}
+          ml={1}
+          minWidth={0}
+        >
           <Box
             component="img"
             src={image}
             alt={title}
             sx={{ width: 70, height: 70, borderRadius: 1, objectFit: "cover" }}
           />
+
           <Box
             ml={2}
             display="flex"
             flexDirection="column"
             justifyContent="center"
             flexGrow={1}
+            minWidth={0}
           >
             {/* Title + Price Row */}
-            <Box display="flex" alignItems="center" gap={1}>
+            <Box
+              display="flex"
+              alignItems="center"
+              gap={1}
+              flexWrap="wrap"
+              justifyContent="space-between"
+            >
               <Typography
                 variant="body1"
-                noWrap
                 sx={{
-                  maxWidth: 400,
+                  maxWidth: {
+                    xs: "100%", // wrap on small screens
+                    sm: "300px",
+                    md: "400px",
+                  },
                   fontWeight: 500,
                   overflow: "hidden",
                   textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
+                  whiteSpace: "normal", // allow wrapping
                   color: inStock ? "text.primary" : "text.secondary",
+                  flexShrink: 1,
                 }}
                 title={title}
               >
                 {title}
               </Typography>
 
-              {/* Price right after title */}
-              <Box display="flex" flexDirection="column">
+              <Box display="flex" flexDirection="column" flexShrink={0}>
                 <Typography
                   variant="body2"
                   sx={{
@@ -179,7 +196,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         </Box>
 
         {/* Right side: Quantity + icons if not moved below */}
-        <Box display="flex" alignItems="center" gap={1}>
+        <Box display="flex" alignItems="center" gap={1} mt={{ xs: 1, md: 0 }}>
           {showQuantityControls && (
             <>
               <IconButton size="small" onClick={() => handleQuantityChange(-1)}>

@@ -1,4 +1,3 @@
-// src/pages/wishlist.tsx
 import React, { useState } from "react";
 import {
   Box,

@@ -1,4 +1,3 @@
-// src/components/cards/product-card.tsx
 import React from "react";
 import AppCard from "../ui/app-card";
 import { Box, Typography, Rating } from "@mui/material";
