@@ -1,20 +1,52 @@
 import React, { useState } from "react";
 import {
+  Divider,
   Container,
-  Grid,
   Box,
+  Grid,
   Typography,
   IconButton,
   TextField,
   Rating,
   MenuItem,
   Paper,
+  Select,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import StarIcon from "@mui/icons-material/Star";
 import AppButton from "../components/ui/app-button";
 
+const reviews = [
+  {
+    name: "A***",
+    verified: true,
+    date: "29 Aug 2024",
+    rating: 5,
+    text: "Quality Achi ha. Time per delivered hogya tha ❤️",
+    likes: 62,
+    image: "https://picsum.photos/80?random=1",
+  },
+  {
+    name: "Haziq S.",
+    verified: true,
+    date: "05 Feb 2025",
+    rating: 5,
+    text: "The mask is great and fits well, totally satisfied!",
+    likes: 18,
+  },
+  {
+    name: "Saad A.",
+    verified: false,
+    date: "02 Jan 2025",
+    rating: 3,
+    text: "Sound quality is okay but not as expected.",
+    likes: 4,
+  },
+];
 const dummyProduct = {
   id: 1,
   title: "Wireless Headphones Pro",
@@ -31,6 +63,19 @@ const dummyProduct = {
   onSale: true,
   colors: ["Black", "White", "Blue"],
   sizes: ["S", "M", "L", "XL"],
+  details: `
+These wireless headphones deliver high-fidelity audio with deep bass and crisp highs. 
+Enjoy up to 30 hours of playtime on a single charge, and quickly recharge via USB-C.
+
+Features include:
+- Active Noise Cancellation (ANC)
+- Bluetooth 5.2 for ultra-stable connection
+- Soft memory foam ear cushions
+- Built-in microphone for calls
+- Foldable and lightweight design
+
+Compatible with Android, iOS, and Windows devices.
+  `,
 };
 
 const ProductDetails: React.FC = () => {
@@ -39,11 +84,17 @@ const ProductDetails: React.FC = () => {
   const [selectedSize, setSelectedSize] = useState(dummyProduct.sizes[0]);
   const [quantity, setQuantity] = useState(1);
   const [selectedAddress, setSelectedAddress] = useState("Home");
+  const [filterRating, setFilterRating] = useState("all");
 
   const addresses = [
     { label: "Home - Street 123, Karachi", value: "Home" },
     { label: "Office - DHA Phase 6, Karachi", value: "Office" },
   ];
+
+  const filteredReviews =
+    filterRating === "all"
+      ? reviews
+      : reviews.filter((r) => r.rating === Number(filterRating));
 
   const paymentOptions = [
     "Payoneer",
@@ -68,6 +119,7 @@ const ProductDetails: React.FC = () => {
   return (
     <Container maxWidth="xl" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 4, borderRadius: 1 }}>
+        {/* ========== MAIN 3-COLUMN LAYOUT ========== */}
         <Box
           sx={{
             display: "grid",
@@ -186,7 +238,6 @@ const ProductDetails: React.FC = () => {
                   boxShadow: "0 4px 12px rgba(245, 124, 0, 0.5)",
                 }}
               >
-                {/* Decorative Sale Tag */}
                 <Box
                   sx={{
                     position: "absolute",
@@ -436,6 +487,243 @@ const ProductDetails: React.FC = () => {
               </Typography>
             </Box>
           </Box>
+        </Box>
+
+        {/* ========== PRODUCT DETAILS SECTION ========== */}
+        <Box
+          sx={{
+            mt: 5,
+            pt: 3,
+            borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: 600, mb: 2, color: "text.primary" }}
+          >
+            Product Details
+          </Typography>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ whiteSpace: "pre-line" }}
+          >
+            {dummyProduct.details}
+          </Typography>
+        </Box>
+      </Paper>
+
+      {/* ========== RATINGS & REVIEWS SECTION ========== */}
+      <Paper elevation={2} sx={{ mt: 4, p: 3 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 2,
+          }}
+        >
+          <Typography variant="h6" fontWeight="bold">
+            Ratings & Reviews
+          </Typography>
+
+          {/* Rating Filter */}
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <InputLabel>Filter by Rating</InputLabel>
+            <Select
+              value={filterRating}
+              label="Filter by Rating"
+              onChange={(e) => setFilterRating(e.target.value)}
+            >
+              <MenuItem value="all">All Ratings</MenuItem>
+              <MenuItem value="5">5 Stars</MenuItem>
+              <MenuItem value="4">4 Stars</MenuItem>
+              <MenuItem value="3">3 Stars</MenuItem>
+              <MenuItem value="2">2 Stars</MenuItem>
+              <MenuItem value="1">1 Star</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Divider sx={{ mb: 2 }} />
+
+        {/* Rating Summary Row */}
+        <Grid container spacing={3} alignItems="center">
+          {/* Left: Average Rating */}
+          <Grid sx={{ xs: 12, md: 4 }} textAlign="center">
+            <Typography variant="h2" fontWeight="bold">
+              4.6
+              <Typography
+                component="span"
+                sx={{ fontSize: "1.25rem", color: "text.secondary" }}
+              >
+                /5
+              </Typography>
+            </Typography>
+            <Rating value={4.6} precision={0.1} readOnly size="large" />
+            <Typography variant="body2" color="text.secondary">
+              301 Ratings
+            </Typography>
+          </Grid>
+
+          {/* Right: Rating Bars */}
+          {/* Right: Rating Bars */}
+          <Grid
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              flexGrow: 1,
+            }}
+          >
+            {[
+              { stars: 5, count: 261 },
+              { stars: 4, count: 7 },
+              { stars: 3, count: 9 },
+              { stars: 2, count: 9 },
+              { stars: 1, count: 15 },
+            ].map((item) => {
+              const total = 301;
+              const percent = (item.count / total) * 100;
+
+              return (
+                <Box
+                  key={item.stars}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    mt: 1,
+                    width: "25%",
+                  }}
+                >
+                  {/* Replace star count with actual Rating component */}
+                  <Rating
+                    value={item.stars}
+                    readOnly
+                    size="small"
+                    sx={{
+                      color: "gold",
+                      minWidth: 110, // keeps width consistent across rows
+                    }}
+                  />
+
+                  {/* Progress bar */}
+                  <Box
+                    sx={{
+                      flex: 1,
+                      height: 8,
+                      backgroundColor: "#e0e0e0",
+                      borderRadius: 4,
+                      overflow: "hidden",
+                      minWidth: 120,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: `${percent}%`,
+                        height: "100%",
+                        backgroundColor: "#fbc02d",
+                        borderRadius: 4,
+                        transition: "width 0.4s ease",
+                      }}
+                    />
+                  </Box>
+
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      width: 40,
+                      textAlign: "right",
+                      color: "text.secondary",
+                    }}
+                  >
+                    {item.count}
+                  </Typography>
+                </Box>
+              );
+            })}
+          </Grid>
+        </Grid>
+
+        {/* Reviews Section */}
+        <Box sx={{ mt: 4 }}>
+          {filteredReviews.map((review, index) => (
+            <Paper
+              key={index}
+              variant="outlined"
+              sx={{
+                p: 2,
+                mb: 2,
+                borderRadius: 2,
+                backgroundColor: "background.paper",
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                <Typography variant="subtitle2" fontWeight="bold">
+                  {review.name}
+                </Typography>
+                {review.verified && (
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      ml: 1,
+                      color: "green",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    ✅ Verified Purchase
+                  </Typography>
+                )}
+                <Typography
+                  variant="body2"
+                  sx={{ ml: "auto", color: "text.secondary" }}
+                >
+                  {review.date}
+                </Typography>
+              </Box>
+
+              <Rating value={review.rating} readOnly size="small" />
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                {review.text}
+              </Typography>
+
+              {review.image && (
+                <Box
+                  component="img"
+                  src={review.image}
+                  alt="Review"
+                  sx={{
+                    mt: 1,
+                    width: 80,
+                    height: 80,
+                    borderRadius: 1,
+                    objectFit: "cover",
+                  }}
+                />
+              )}
+
+              <Box
+                sx={{
+                  mt: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                >
+                  👍 {review.likes}
+                </Typography>
+                <AppButton size="small" sx={{ textTransform: "none" }}>
+                  Reply
+                </AppButton>
+              </Box>
+            </Paper>
+          ))}
         </Box>
       </Paper>
     </Container>

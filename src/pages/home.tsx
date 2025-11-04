@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container, Grid, Paper, Typography } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import AppSearchBar from "../components/ui/app-searach-bar";
 import AppImageSlider from "../components/ui/app-image-slider";
 import SectionHeader from "../components/ui/secion-header";
@@ -8,8 +8,6 @@ import CategoryCard from "../components/cards/category-card";
 import AppButton from "../components/ui/app-button";
 
 const Home: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [category, setCategory] = useState<string | number>("");
   const [visibleRecommendations, setVisibleRecommendations] = useState(3);
 
   // Dummy slider images
@@ -96,14 +94,6 @@ const Home: React.FC = () => {
 
   const handleSearch = (query: string) => {
     console.log("Searching for:", query);
-  };
-
-  const handleAddToCart = (productId: number) => {
-    console.log("Add to cart:", productId);
-  };
-
-  const handleAddToWishlist = (productId: number) => {
-    console.log("Add to wishlist:", productId);
   };
 
   // Load more handler
