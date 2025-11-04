@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container, Grid, Paper } from "@mui/material";
+import { Box, Container, Grid, Paper, Typography } from "@mui/material";
 import AppSearchBar from "../components/ui/app-searach-bar";
 import AppImageSlider from "../components/ui/app-image-slider";
 import SectionHeader from "../components/ui/secion-header";
@@ -25,44 +25,50 @@ const Home: React.FC = () => {
     {
       id: 1,
       title: "Wireless Headphones",
-      description: "Noise-cancelling over-ear headphones.",
+      description: "High-quality over-ear headphones with noise cancellation.",
       image: "https://picsum.photos/400/250?random=1",
       price: 99.99,
+      rating: 4.5,
     },
     {
       id: 2,
       title: "Smartwatch Pro",
-      description: "Premium health and fitness tracker.",
+      description: "Track your health and fitness with premium sensors.",
       image: "https://picsum.photos/400/250?random=2",
       price: 149.5,
+      rating: 4.0,
     },
     {
       id: 3,
       title: "Bluetooth Speaker",
-      description: "Portable waterproof speaker.",
+      description: "Portable and waterproof, perfect for outdoor adventures.",
       image: "https://picsum.photos/400/250?random=3",
       price: 59.0,
+      rating: 4.2,
     },
     {
       id: 4,
-      title: "Laptop Stand",
-      description: "Ergonomic aluminum laptop stand.",
+      title: "Gaming Mouse",
+      description: "High-precision wired mouse for gaming enthusiasts.",
       image: "https://picsum.photos/400/250?random=4",
-      price: 39.99,
+      price: 45.99,
+      rating: 4.7,
     },
     {
       id: 5,
-      title: "Wireless Mouse",
-      description: "Rechargeable ergonomic mouse.",
+      title: "Laptop Backpack",
+      description: "Durable backpack with multiple compartments.",
       image: "https://picsum.photos/400/250?random=5",
-      price: 29.99,
+      price: 39.99,
+      rating: 4.1,
     },
     {
       id: 6,
-      title: "Gaming Keyboard",
-      description: "RGB mechanical keyboard.",
+      title: "Smart LED Bulb",
+      description: "Control lighting with your smartphone or voice assistant.",
       image: "https://picsum.photos/400/250?random=6",
-      price: 89.0,
+      price: 19.99,
+      rating: 4.3,
     },
   ];
 
@@ -135,8 +141,6 @@ const Home: React.FC = () => {
                 title={product.title}
                 description={product.description}
                 price={product.price}
-                onAddToCart={() => handleAddToCart(product.id)}
-                onAddToWishlist={() => handleAddToWishlist(product.id)}
               />
             </Grid>
           ))}
@@ -179,8 +183,7 @@ const Home: React.FC = () => {
                 title={product.title}
                 description={product.description}
                 price={product.price}
-                onAddToCart={() => handleAddToCart(product.id)}
-                onAddToWishlist={() => handleAddToWishlist(product.id)}
+                rating={product.rating}
               />
             </Grid>
           ))}

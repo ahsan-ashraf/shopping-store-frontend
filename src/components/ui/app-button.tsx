@@ -23,35 +23,57 @@ export interface AppButtonProps extends Omit<MUIButtonProps, "variant"> {
 
 /** style map for semantic variants */
 const variantSx = (variant: AppButtonVariant | undefined): SxProps<Theme> => {
-  switch (variant) {
-    case "secondary":
-      return {
-        bgcolor: "grey.100",
-        color: "text.primary",
-        border: (theme: Theme) => `1px solid ${theme.palette.grey[300]}`,
-        "&:hover": { bgcolor: "grey.200" },
-      };
-    case "ghost":
-      return {
-        bgcolor: "transparent",
-        color: "text.primary",
-        boxShadow: "none",
-        "&:hover": { bgcolor: "rgba(0,0,0,0.04)" },
-      };
-    case "danger":
-      return {
-        bgcolor: "error.main",
-        color: "common.white",
-        "&:hover": { bgcolor: "error.dark" },
-      };
-    case "primary":
-    default:
-      return {
-        bgcolor: "primary.main",
-        color: "primary.contrastText",
-        "&:hover": { bgcolor: "primary.dark" },
-      };
-  }
+  return (theme) => {
+    switch (variant) {
+      case "secondary":
+        return {
+          bgcolor:
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[100],
+          color:
+            theme.palette.mode === "light"
+              ? theme.palette.text.primary
+              : theme.palette.grey[800],
+          border: `1px solid ${
+            theme.palette.mode === "light"
+              ? theme.palette.grey[300]
+              : theme.palette.grey[700]
+          }`,
+          "&:hover": {
+            bgcolor:
+              theme.palette.mode === "light"
+                ? theme.palette.grey[200]
+                : theme.palette.grey[700],
+          },
+        };
+      case "ghost":
+        return {
+          bgcolor: "transparent",
+          color: theme.palette.text.primary,
+          boxShadow: "none",
+          "&:hover": {
+            bgcolor:
+              theme.palette.mode === "light"
+                ? "rgba(0,0,0,0.04)"
+                : "rgba(255,255,255,0.08)",
+          },
+        };
+      case "danger":
+        return {
+          bgcolor: theme.palette.error.main,
+          color: theme.palette.common.white,
+          "&:hover": { bgcolor: theme.palette.error.dark },
+        };
+      case "primary":
+      default:
+        return {
+          bgcolor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+          "&:hover": { bgcolor: theme.palette.primary.dark },
+        };
+    }
+  };
 };
 
 const baseSx: SxProps<Theme> = {

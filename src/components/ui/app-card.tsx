@@ -1,3 +1,4 @@
+// src/components/ui/app-card.tsx
 import React from "react";
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { cn } from "../../utils/utils";
@@ -6,24 +7,32 @@ interface AppCardProps {
   image: string;
   title: string;
   description?: string;
-  price?: string | number;
   className?: string;
   onClick?: () => void;
+  children?: React.ReactNode; // allow children
 }
 
 const AppCard: React.FC<AppCardProps> = ({
   image,
   title,
   description,
-  price,
   className,
+  onClick,
+  children,
 }) => {
   return (
     <Card
-      className={cn(
-        "rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden",
-        className
-      )}
+      onClick={onClick}
+      className={cn("rounded-2xl overflow-hidden", className)}
+      sx={{
+        boxShadow: 2,
+        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        "&:hover": {
+          transform: "scale(1.03)",
+          boxShadow: 6,
+        },
+        cursor: onClick ? "pointer" : "default",
+      }}
     >
       <CardMedia
         component="img"
@@ -37,7 +46,7 @@ const AppCard: React.FC<AppCardProps> = ({
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          height: "calc(100% - 140px)", // remaining height for content
+          minHeight: 80,
         }}
       >
         <Typography
@@ -47,25 +56,27 @@ const AppCard: React.FC<AppCardProps> = ({
           sx={{
             overflow: "hidden",
             textOverflow: "ellipsis",
-            whiteSpace: "nowrap", // single line truncation
+            whiteSpace: "nowrap",
           }}
         >
           {title}
         </Typography>
         {description && (
-          <Typography variant="body2" color="text.secondary" noWrap>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
             {description}
           </Typography>
         )}
-        {price && (
-          <Typography
-            variant="subtitle1"
-            color="primary"
-            className="mt-2 font-semibold"
-          >
-            ${price}
-          </Typography>
-        )}
+
+        {/* render any children passed from specialized cards */}
+        {children}
       </CardContent>
     </Card>
   );

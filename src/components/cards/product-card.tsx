@@ -1,31 +1,39 @@
+// src/components/cards/product-card.tsx
 import React from "react";
 import AppCard from "../ui/app-card";
-import { CardActions, IconButton } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import AppButton from "../ui/app-button";
+import { Box, Typography, Rating } from "@mui/material";
 
 interface ProductCardProps {
   image: string;
   title: string;
   description?: string;
   price: string | number;
-  onAddToCart: () => void;
-  onAddToWishlist: () => void;
+  rating?: number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = (props) => {
-  const { onAddToCart, onAddToWishlist, ...cardProps } = props;
-
+const ProductCard: React.FC<ProductCardProps> = ({
+  price,
+  rating = 0,
+  ...cardProps
+}) => {
   return (
     <AppCard {...cardProps}>
-      <CardActions className="flex justify-between items-center px-3 pb-3">
-        <AppButton variant="primary" onClick={onAddToCart}>
-          Add to Cart
-        </AppButton>
-        <IconButton onClick={onAddToWishlist}>
-          <FavoriteBorderIcon />
-        </IconButton>
-      </CardActions>
+      {/* Price and Rating */}
+      <Box sx={{ mt: 1 }}>
+        <Typography
+          variant="subtitle1"
+          color="primary"
+          sx={{ fontWeight: 600 }}
+        >
+          ${price}
+        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, mt: 0.5 }}>
+          <Rating value={rating} precision={0.5} readOnly size="small" />
+          <Typography variant="body2" color="text.secondary">
+            {rating.toFixed(1)}
+          </Typography>
+        </Box>
+      </Box>
     </AppCard>
   );
 };
