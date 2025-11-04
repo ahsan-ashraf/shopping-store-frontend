@@ -1,17 +1,18 @@
+// src/pages/wishlist.tsx
 import React, { useState } from "react";
 import {
   Box,
   Container,
-  Typography,
   Paper,
-  IconButton,
+  Typography,
   Divider,
   Checkbox,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import DeleteIcon from "@mui/icons-material/Delete";
 import AppButton from "../components/ui/app-button";
 import SectionHeader from "../components/ui/secion-header";
+import ProductItem from "../components/product-item";
 
 const wishlistItems = [
   {
@@ -43,115 +44,6 @@ const wishlistItems = [
     inStock: false,
   },
 ];
-
-interface WishlistItemProps {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
-  inStock: boolean;
-  checked: boolean;
-  onToggleCheck: (id: number) => void;
-  onAddToCart?: () => void;
-  onDelete?: () => void;
-}
-
-const WishlistItem: React.FC<WishlistItemProps> = ({
-  id,
-  title,
-  image,
-  price,
-  inStock,
-  checked,
-  onToggleCheck,
-  onAddToCart,
-  onDelete,
-}) => {
-  return (
-    <>
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        py={1.5}
-      >
-        {/* Checkbox */}
-        <Checkbox
-          checked={checked}
-          onChange={() => onToggleCheck(id)}
-          color="primary"
-        />
-
-        {/* Product Image + Info */}
-        <Box display="flex" alignItems="center" flexGrow={1}>
-          <Box
-            component="img"
-            src={image}
-            alt={title}
-            sx={{
-              width: 70,
-              height: 70,
-              borderRadius: 1,
-              objectFit: "cover",
-            }}
-          />
-          <Box ml={2} display="flex" alignItems="center" gap={2}>
-            {/* Title */}
-            <Typography
-              variant="body1"
-              noWrap
-              sx={{
-                maxWidth: 300,
-                fontWeight: 500,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                color: inStock ? "text.primary" : "text.secondary",
-              }}
-              title={title}
-            >
-              {title}
-            </Typography>
-
-            {/* Price */}
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                color: inStock ? "primary.main" : "text.secondary",
-              }}
-            >
-              Rs {price.toLocaleString()}
-            </Typography>
-          </Box>
-        </Box>
-
-        {/* Icons */}
-        <Box display="flex" alignItems="center" gap={1}>
-          {inStock && (
-            <IconButton
-              color="primary"
-              onClick={onAddToCart}
-              size="small"
-              sx={{ borderRadius: 1 }}
-            >
-              <AddShoppingCartIcon />
-            </IconButton>
-          )}
-          <IconButton
-            color="error"
-            onClick={onDelete}
-            size="small"
-            sx={{ borderRadius: 1 }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Box>
-      </Box>
-      <Divider />
-    </>
-  );
-};
 
 interface WishlistSectionProps {
   title: string;
@@ -193,7 +85,7 @@ const WishlistSection: React.FC<WishlistSectionProps> = ({
 
   return (
     <Paper elevation={3} sx={{ p: 2, borderRadius: 2, mb: 3 }}>
-      {/* Header */}
+      {/* Section Header */}
       <Typography
         variant="h6"
         fontWeight={600}
@@ -230,20 +122,19 @@ const WishlistSection: React.FC<WishlistSectionProps> = ({
               {selectedIds.length} selected
             </Typography>
           </Box>
-
           <Box display="flex" alignItems="center" gap={1}>
             {allowAddToCart && (
-              <IconButton
+              <AddShoppingCartIcon
                 color="primary"
-                size="small"
                 onClick={handleAddToCart}
-              >
-                <AddShoppingCartIcon />
-              </IconButton>
+                style={{ cursor: "pointer" }}
+              />
             )}
-            <IconButton color="error" size="small" onClick={handleDelete}>
-              <DeleteIcon />
-            </IconButton>
+            <DeleteIcon
+              color="error"
+              onClick={handleDelete}
+              style={{ cursor: "pointer" }}
+            />
           </Box>
         </Box>
       )}
@@ -251,7 +142,7 @@ const WishlistSection: React.FC<WishlistSectionProps> = ({
       {/* Items */}
       {items.length > 0 ? (
         items.map((item) => (
-          <WishlistItem
+          <ProductItem
             key={item.id}
             id={item.id}
             title={item.title}
@@ -259,6 +150,9 @@ const WishlistSection: React.FC<WishlistSectionProps> = ({
             price={item.price}
             inStock={item.inStock}
             checked={selectedIds.includes(item.id)}
+            showAddToCart={allowAddToCart && item.inStock}
+            showWishlistIcon={false} // wishlist icon not needed here
+            moveWishlistBelowPrice={false} // keep icons on right like current wishlist
             onToggleCheck={handleToggleCheck}
             onAddToCart={() => console.log("Add to cart:", item.title)}
             onDelete={() => console.log("Delete:", item.title)}
@@ -279,10 +173,8 @@ const Wishlist: React.FC = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
-      {/* Page Header */}
       <SectionHeader title="My Wishlists" />
 
-      {/* Add All to Cart */}
       <AppButton
         fullWidth
         variant="primary"
@@ -292,10 +184,7 @@ const Wishlist: React.FC = () => {
         Add All to Cart
       </AppButton>
 
-      {/* Back in Stock Section */}
       <WishlistSection title="Back in Stock" items={inStockItems} />
-
-      {/* Out of Stock Section */}
       <WishlistSection
         title="Out of Stock"
         items={outOfStockItems}

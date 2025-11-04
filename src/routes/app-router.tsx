@@ -7,6 +7,7 @@ import Contact from "../pages/contact";
 import { AppRoutes } from "./routes-metadata";
 import ProductDetails from "../pages/product-details";
 import Wishlist from "../pages/wishlist";
+import Cart from "../pages/cart";
 
 const AppRouter: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const AppRouter: React.FC = () => {
           <Route path={AppRoutes.About} element={<About />} />
           <Route path={AppRoutes.Contact} element={<Contact />} />
           <Route path={AppRoutes.Wishlist} element={<Wishlist />} />
+          <Route path={AppRoutes.Cart} element={<Cart />} />
           <Route path={AppRoutes.ProductDetails} element={<ProductDetails />} />
           <Route
             path={AppRoutes.Invalid}
