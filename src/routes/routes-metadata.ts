@@ -7,5 +7,8 @@ export const AppRoutes = {
   Wishlist: "/wishlist",
   BuyerOrders: "/buyer-orders",
   ProductDetails: "/product/:productId",
+  RiderOrdersToDeliver: "/rider/orders-to-deliver",
+  RiderOrdersReturnRequests: "/rider/orders-return-requests",
+  RiderOrderHistory: "/rider/orders-history",
   Invalid: "*",
 };

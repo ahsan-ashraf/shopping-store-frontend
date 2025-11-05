@@ -39,3 +39,9 @@ export interface Order {
 }
 
 export type SortOption = "latest" | "oldest" | "price_high" | "price_low";
+export type OrderStatus = "pending" | "inprogress" | "delivered" | "failed";
+export type ReturnStatus =
+  | "pending"
+  | "inprogress"
+  | "completed"
+  | "awaiting_store";

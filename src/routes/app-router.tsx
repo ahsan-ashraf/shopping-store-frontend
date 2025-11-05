@@ -10,6 +10,9 @@ import Wishlist from "../pages/wishlist";
 import Cart from "../pages/cart";
 import Profile from "../pages/profile/profile";
 import BuyerOrders from "../pages/buyer-orders/buyer-orders";
+import OrdersToDeliver from "../pages/orders-to-deliver";
+import OrderReturnRequests from "../pages/order-return-requests";
+import OrdersHistory from "../pages/order-history";
 
 const AppRouter: React.FC = () => {
   return (
@@ -26,6 +29,18 @@ const AppRouter: React.FC = () => {
           <Route path={AppRoutes.Cart} element={<Cart />} />
           <Route path={AppRoutes.BuyerOrders} element={<BuyerOrders />} />
           <Route path={AppRoutes.ProductDetails} element={<ProductDetails />} />
+          <Route
+            path={AppRoutes.RiderOrdersToDeliver}
+            element={<OrdersToDeliver />}
+          />
+          <Route
+            path={AppRoutes.RiderOrdersReturnRequests}
+            element={<OrderReturnRequests />}
+          />
+          <Route
+            path={AppRoutes.RiderOrderHistory}
+            element={<OrdersHistory />}
+          />
           <Route
             path={AppRoutes.Invalid}
             element={<Navigate to={AppRoutes.Home} replace />}
