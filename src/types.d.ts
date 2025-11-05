@@ -19,3 +19,23 @@ export interface UserProfile {
   birthDate?: string; // ISO
   gender?: "male" | "female" | "other" | "";
 }
+
+export interface Order {
+  id: string;
+  productImage: string;
+  title: string;
+  description: string;
+  price: number;
+  status:
+    | "processing"
+    | "packing"
+    | "outForDelivery"
+    | "riderOnWay"
+    | "delivered"
+    | "returned"
+    | "canceled";
+  date: string;
+  category: string;
+}
+
+export type SortOption = "latest" | "oldest" | "price_high" | "price_low";

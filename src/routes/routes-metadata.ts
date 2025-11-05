@@ -5,6 +5,7 @@ export const AppRoutes = {
   Cart: "/cart",
   Profile: "/profile",
   Wishlist: "/wishlist",
+  BuyerOrders: "/buyer-orders",
   ProductDetails: "/product/:productId",
   Invalid: "*",
 };
