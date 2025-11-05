@@ -18,11 +18,12 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { Link } from "react-router-dom";
 import { useThemeContext } from "../../context/theme-context";
+import { AppRoutes } from "../../routes/routes-metadata";
 
 const navItems = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
-  { label: "Contact", path: "/contact" },
+  { label: "Home", path: AppRoutes.Home },
+  { label: "About", path: AppRoutes.About },
+  { label: "Contact", path: AppRoutes.Contact },
   { label: "Login", path: "/login" },
 ];
 

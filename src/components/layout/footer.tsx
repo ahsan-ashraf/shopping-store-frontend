@@ -14,6 +14,7 @@ import {
   LinkedIn,
   YouTube,
 } from "@mui/icons-material";
+import { AppRoutes } from "../../routes/routes-metadata";
 
 const Footer: React.FC = () => {
   return (
@@ -71,13 +72,13 @@ const Footer: React.FC = () => {
             Quick Links
           </Typography>
           <Stack spacing={1}>
-            <Link href="/" underline="hover" color="inherit">
+            <Link href={AppRoutes.Home} underline="hover" color="inherit">
               Home
             </Link>
-            <Link href="/about" underline="hover" color="inherit">
+            <Link href={AppRoutes.About} underline="hover" color="inherit">
               About Us
             </Link>
-            <Link href="/contact" underline="hover" color="inherit">
+            <Link href={AppRoutes.Contact} underline="hover" color="inherit">
               Contact
             </Link>
             <Link href="/faq" underline="hover" color="inherit">

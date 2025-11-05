@@ -17,6 +17,7 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CategoryIcon from "@mui/icons-material/Category";
 import { Link } from "react-router-dom";
+import { AppRoutes } from "../../routes/routes-metadata";
 
 const drawerWidth = 200;
 const miniWidth = 60;
@@ -32,9 +33,9 @@ const sidebarItems: SidebarItem[] = [
   { label: "Orders", path: "/orders", icon: <ListAltIcon /> },
   { label: "Wishlist", path: "/wishlist", icon: <FavoriteIcon /> },
   { label: "Categories", path: "/categories", icon: <CategoryIcon /> },
-  { label: "Home", path: "/", icon: <HomeIcon /> },
-  { label: "About", path: "/about", icon: <InfoIcon /> },
-  { label: "Contact", path: "/contact", icon: <ContactMailIcon /> },
+  { label: "Home", path: AppRoutes.Home, icon: <HomeIcon /> },
+  { label: "About", path: AppRoutes.About, icon: <InfoIcon /> },
+  { label: "Contact", path: AppRoutes.Contact, icon: <ContactMailIcon /> },
 ];
 
 const Sidebar: React.FC = () => {
