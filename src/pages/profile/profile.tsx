@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import PersonalInfoSection from "./components/personal-info";
 import AddressBookSection from "./components/address-book";
 import ProfileModal from "../../components/profile-modal";
@@ -8,9 +8,7 @@ import { ConfirmModal } from "../../components/confirm-modal";
 import type { UserProfile, Address } from "../../types";
 import SectionHeader from "../../components/ui/secion-header";
 
-interface Props {}
-
-const Profile: React.FC<Props> = (props) => {
+const Profile: React.FC = () => {
   // server states:
   const [profile, setProfile] = useState<UserProfile>({
     id: "u1",

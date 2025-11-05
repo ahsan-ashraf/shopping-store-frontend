@@ -6,9 +6,6 @@ import SectionHeader from "../components/ui/secion-header";
 import ProductCard from "../components/cards/product-card";
 import CategoryCard from "../components/cards/category-card";
 import AppButton from "../components/ui/app-button";
-import { ConfirmModal } from "../components/confirm-modal";
-import AddressModal from "../components/address-modal";
-import ProfileModal from "../components/profile-modal";
 
 const Home: React.FC = () => {
   const [visibleRecommendations, setVisibleRecommendations] = useState(3);
