@@ -38,6 +38,7 @@ export interface Order {
   category: string;
 }
 
+export type Registration = "buyer" | "seller" | "admin" | "rider";
 export type SortOption = "latest" | "oldest" | "price_high" | "price_low";
 export type OrderStatus = "pending" | "inprogress" | "delivered" | "failed";
 export type ReturnStatus =

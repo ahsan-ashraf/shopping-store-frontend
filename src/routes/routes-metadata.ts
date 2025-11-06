@@ -1,4 +1,4 @@
-export const AppRoutes = {
+export const AppRoutes = Object.freeze({
   Home: "/",
   About: "/about-us",
   Contact: "/contact-us",
@@ -10,5 +10,6 @@ export const AppRoutes = {
   RiderOrdersToDeliver: "/rider/orders-to-deliver",
   RiderOrdersReturnRequests: "/rider/orders-return-requests",
   RiderOrderHistory: "/rider/orders-history",
+  Registration: "register/:role",
   Invalid: "*",
-};
+});

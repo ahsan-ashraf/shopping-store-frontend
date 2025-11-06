@@ -13,6 +13,7 @@ import BuyerOrders from "../pages/buyer-orders/buyer-orders";
 import OrdersToDeliver from "../pages/orders-to-deliver";
 import OrderReturnRequests from "../pages/order-return-requests";
 import OrdersHistory from "../pages/order-history";
+import UserRegistration from "../pages/registration/user-registration";
 
 const AppRouter: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const AppRouter: React.FC = () => {
           <Route index element={<Home />} />
           <Route path={AppRoutes.About} element={<About />} />
           <Route path={AppRoutes.Contact} element={<Contact />} />
+          <Route path={AppRoutes.Registration} element={<UserRegistration />} />
 
           {/* protected routes */}
           <Route path={AppRoutes.Profile} element={<Profile />} />
