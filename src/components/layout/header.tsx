@@ -33,8 +33,11 @@ const Header: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // 🔹 Temporary cart count (you can replace it later with context or Redux)
+  // 🔹 Temporary cart count (replace with dynamic value later)
   const cartCount = 3;
+
+  // 🔹 Temporary store wallet amount (replace with dynamic value later)
+  const storeWallet = 1250;
 
   return (
     <>
@@ -45,7 +48,7 @@ const Header: React.FC = () => {
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* Left: Store icon + name */}
+          {/* Left: Store icon + name + wallet */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <StorefrontIcon sx={{ color: theme.palette.primary.main }} />
             <Typography
@@ -58,6 +61,32 @@ const Header: React.FC = () => {
             >
               Saba Store
             </Typography>
+
+            {/* Wallet Amount */}
+            <Box
+              sx={{
+                ml: 3,
+                px: 2,
+                py: 0.5,
+                bgcolor: theme.palette.mode === "light" ? "#e6f4ea" : "#14532d", // light/dark green background
+                borderRadius: "12px",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                variant="body1"
+                sx={{
+                  color: theme.palette.mode === "light" ? "#2e7d32" : "#a5d6a7", // dark/light text for contrast
+                  fontWeight: 700,
+                  fontFamily: "Inter, Roboto, sans-serif",
+                  letterSpacing: 0.5,
+                }}
+              >
+                Wallet: ${storeWallet}
+              </Typography>
+            </Box>
           </Box>
 
           {/* Right Section */}
