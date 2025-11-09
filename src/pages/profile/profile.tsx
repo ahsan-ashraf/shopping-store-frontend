@@ -7,6 +7,7 @@ import AddressModal from "../../components/address-modal";
 import { ConfirmModal } from "../../components/confirm-modal";
 import type { UserProfile, Address } from "../../types";
 import SectionHeader from "../../components/ui/secion-header";
+import SellerStoresSection from "./components/seller-store-section";
 
 const Profile: React.FC = () => {
   // server states:
@@ -16,7 +17,11 @@ const Profile: React.FC = () => {
     email: "ahsan@example.com",
     phone: "+92 300 0000000",
     birthDate: "1990-01-01",
+    address: "st #2, gulshan adeel colony, kanganiwala, gujranawla",
+    vehicleRegNo: "GAK7451",
+    companyPhone: "+92 333 3333333",
     gender: "male",
+    role: "super admin",
   });
   const [addresses, setAddresses] = useState<Address[]>([
     {
@@ -44,6 +49,23 @@ const Profile: React.FC = () => {
       type: "office",
     },
   ]);
+  const mockStores = [
+    {
+      id: "1",
+      name: "Gadget Galaxy",
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+    },
+    {
+      id: "2",
+      name: "Tech Haven",
+      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+    },
+    {
+      id: "3",
+      name: "Urban Style Hub",
+      image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f",
+    },
+  ];
 
   // local states:
   const [openAddrModal, setOpenAddrModal] = useState(false);
@@ -83,6 +105,19 @@ const Profile: React.FC = () => {
     setToDelete(null);
     setOpenConfirm(false);
   };
+  const handleEditProfile = () => {
+    console.log("Edit Profile clicked");
+  };
+
+  const handleSelectStore = (storeId: string) => {
+    console.log("Go to store:", storeId);
+    // navigate(`/seller/store/${storeId}`);
+  };
+
+  const handleCreateStore = () => {
+    console.log("Redirect to create store page");
+    // navigate("/seller/store/create");
+  };
 
   return (
     <Container sx={{ py: 4 }}>
@@ -97,6 +132,11 @@ const Profile: React.FC = () => {
           onEdit={handleEdit}
           onDelete={handleDeleteRequest}
           onAdd={handleAdd}
+        />
+        <SellerStoresSection
+          stores={mockStores}
+          onSelectStore={handleSelectStore}
+          onCreateStore={handleCreateStore}
         />
 
         <AddressModal

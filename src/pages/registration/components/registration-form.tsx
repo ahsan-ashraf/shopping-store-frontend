@@ -1,4 +1,3 @@
-// src/components/registration-form.tsx
 import React, { useState } from "react";
 import {
   Container,

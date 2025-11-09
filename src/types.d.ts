@@ -15,9 +15,13 @@ export interface UserProfile {
   id: string;
   name: string;
   email: string;
-  phone?: string;
-  birthDate?: string; // ISO
-  gender?: "male" | "female" | "other" | "";
+  phone: string;
+  address: string;
+  vehicleRegNo?: string;
+  companyPhone?: string;
+  birthDate: string; // ISO
+  gender: "male" | "female" | "other" | "";
+  role: "super admin" | "admin" | "seller" | "buyer" | "rider" | "";
 }
 
 export interface Order {

@@ -26,6 +26,8 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
       phone: "",
       birthDate: "",
       gender: "",
+      address: "",
+      role: "",
     }
   );
 
@@ -39,6 +41,8 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
         phone: "",
         birthDate: "",
         gender: "",
+        address: "",
+        role: "",
       });
   }, [initial, open]);
 
@@ -47,6 +51,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
     onSave(form);
     onClose();
   };
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -110,7 +115,17 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
               }
             />
           </Grid>
-
+          {/* ✅ Added Address Field */}
+          <Grid sx={{ width: "100%" }}>
+            <AppInput
+              fullWidth
+              label="Address"
+              value={form.address}
+              onChange={(e) =>
+                setForm((s) => ({ ...s, address: e.target.value }))
+              }
+            />
+          </Grid>
           <Grid sx={{ width: "48%" }}>
             <AppInput
               select
@@ -127,7 +142,6 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
               <MenuItem value="other">Other</MenuItem>
             </AppInput>
           </Grid>
-
           <Grid
             sx={{
               width: "100%",
@@ -149,4 +163,5 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
     </Modal>
   );
 };
+
 export default ProfileModal;

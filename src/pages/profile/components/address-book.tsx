@@ -61,7 +61,7 @@ const AddressBookSection: React.FC<Props> = ({
           {addresses.map((a) => (
             <TableRow key={a.id}>
               <TableCell>{a.name}</TableCell>
-              <TableCell>
+              <TableCell sx={{ maxWidth: 350 }}>
                 <Typography variant="body2">
                   {a.addressLine1}
                   {a.addressLine2 ? `, ${a.addressLine2}` : ""}
@@ -76,7 +76,7 @@ const AddressBookSection: React.FC<Props> = ({
               <TableCell>
                 {a.isDefault ? (
                   <Typography variant="body2" color="text.secondary">
-                    Default shipping address
+                    Default Shipping Address
                   </Typography>
                 ) : null}
               </TableCell>
