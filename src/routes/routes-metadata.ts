@@ -7,6 +7,7 @@ export const AppRoutes = Object.freeze({
   Wishlist: "/wishlist",
   BuyerOrders: "/buyer-orders",
   ProductDetails: "/product/:productId",
+  PublishProduct: "/product/publish",
   RiderOrdersToDeliver: "/rider/orders-to-deliver",
   RiderOrdersReturnRequests: "/rider/orders-return-requests",
   RiderOrderHistory: "/rider/orders-history",
