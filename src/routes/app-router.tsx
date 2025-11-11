@@ -17,6 +17,7 @@ import UserRegistration from "../pages/registration/user-registration";
 import PublishProduct from "../pages/product/publish-product";
 import StoreRegistration from "../pages/store-registration";
 import StoreDetails from "../pages/store-details/store-details";
+import SellerDashboard from "../pages/seller-dashboard/seller-dashboard";
 
 const AppRouter: React.FC = () => {
   return (
@@ -36,6 +37,10 @@ const AppRouter: React.FC = () => {
           <Route path={AppRoutes.StoreDetails} element={<StoreDetails />} />
           <Route path={AppRoutes.ProductDetails} element={<ProductDetails />} />
           <Route path={AppRoutes.PublishProduct} element={<PublishProduct />} />
+          <Route
+            path={AppRoutes.SellerDashboard}
+            element={<SellerDashboard />}
+          />
           <Route
             path={AppRoutes.RegisterStore}
             element={<StoreRegistration />}
