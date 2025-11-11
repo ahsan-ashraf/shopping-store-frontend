@@ -5,7 +5,7 @@ import Home from "../pages/home";
 import About from "../pages/about";
 import Contact from "../pages/contact";
 import { AppRoutes } from "./routes-metadata";
-import ProductDetails from "../pages/product-details";
+import ProductDetails from "../pages/product/product-details";
 import Wishlist from "../pages/wishlist";
 import Cart from "../pages/cart";
 import Profile from "../pages/profile/profile";
@@ -14,7 +14,8 @@ import OrdersToDeliver from "../pages/orders-to-deliver";
 import OrderReturnRequests from "../pages/order-return-requests";
 import OrdersHistory from "../pages/order-history";
 import UserRegistration from "../pages/registration/user-registration";
-import PublishProduct from "../pages/publish-product/publish-product";
+import PublishProduct from "../pages/product/publish-product";
+import StoreRegistration from "../pages/store-registration";
 
 const AppRouter: React.FC = () => {
   return (
@@ -33,6 +34,10 @@ const AppRouter: React.FC = () => {
           <Route path={AppRoutes.BuyerOrders} element={<BuyerOrders />} />
           <Route path={AppRoutes.ProductDetails} element={<ProductDetails />} />
           <Route path={AppRoutes.PublishProduct} element={<PublishProduct />} />
+          <Route
+            path={AppRoutes.RegisterStore}
+            element={<StoreRegistration />}
+          />
           <Route
             path={AppRoutes.RiderOrdersToDeliver}
             element={<OrdersToDeliver />}

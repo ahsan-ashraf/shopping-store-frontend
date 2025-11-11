@@ -17,7 +17,8 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import AppButton from "../components/ui/app-button";
+import AppButton from "../../components/ui/app-button";
+import ProductStats from "./products-stats";
 
 const reviews = [
   {
@@ -723,6 +724,11 @@ const ProductDetails: React.FC = () => {
               </Box>
             </Paper>
           ))}
+        </Box>
+        <Box sx={{ mt: 4 }}>
+          <Paper>
+            <ProductStats />
+          </Paper>
         </Box>
       </Paper>
     </Container>

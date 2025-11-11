@@ -64,7 +64,7 @@ const MediaUpload: React.FC<MediaUploadProps> = ({
     type: file.type.startsWith("video") ? "video" : "image",
   }));
 
-  fileObjects.sort((a, b) => (a.type === "video" ? -1 : 1));
+  fileObjects.sort((a, _) => (a.type === "video" ? -1 : 1));
 
   const urls = fileObjects.map((f) => f.url);
   const types = fileObjects.map((f) => f.type as "video" | "image");
