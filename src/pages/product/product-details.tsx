@@ -78,7 +78,11 @@ Compatible with Android, iOS, and Windows devices.
   `,
 };
 
-const ProductDetails: React.FC = () => {
+interface Props {
+  isOrderView: boolean;
+}
+
+const ProductDetails: React.FC<Props> = ({ isOrderView = true }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState(dummyProduct.colors[0]);
   const [selectedSize, setSelectedSize] = useState(dummyProduct.sizes[0]);
@@ -328,6 +332,11 @@ const ProductDetails: React.FC = () => {
                     variant={selectedColor === color ? "primary" : "secondary"}
                     onClick={() => setSelectedColor(color)}
                     size="small"
+                    disabled={
+                      isOrderView && selectedColor === color
+                        ? false
+                        : isOrderView
+                    }
                   >
                     <Typography sx={{ fontSize: 14 }}>{color}</Typography>
                   </AppButton>
@@ -345,6 +354,9 @@ const ProductDetails: React.FC = () => {
                     variant={selectedSize === size ? "primary" : "secondary"}
                     onClick={() => setSelectedSize(size)}
                     size="small"
+                    disabled={
+                      isOrderView && selectedSize === size ? false : isOrderView
+                    }
                   >
                     <Typography sx={{ fontSize: 14 }}>{size}</Typography>
                   </AppButton>
@@ -369,13 +381,22 @@ const ProductDetails: React.FC = () => {
                     width: "fit-content",
                   }}
                 >
-                  <IconButton
-                    size="small"
-                    onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                    sx={{ borderRight: "1px solid", borderColor: "divider" }}
-                  >
-                    −
-                  </IconButton>
+                  <>
+                    {!isOrderView && (
+                      <IconButton
+                        size="small"
+                        onClick={() =>
+                          setQuantity((prev) => Math.max(1, prev - 1))
+                        }
+                        sx={{
+                          borderRight: "1px solid",
+                          borderColor: "divider",
+                        }}
+                      >
+                        −
+                      </IconButton>
+                    )}
+                  </>
                   <TextField
                     type="number"
                     value={quantity}
@@ -389,24 +410,33 @@ const ProductDetails: React.FC = () => {
                     sx={{
                       "& fieldset": { border: "none" },
                     }}
+                    disabled={isOrderView}
                   />
-                  <IconButton
-                    size="small"
-                    onClick={() =>
-                      setQuantity((prev) => Math.min(99, prev + 1))
-                    }
-                    sx={{ borderLeft: "1px solid", borderColor: "divider" }}
-                  >
-                    +
-                  </IconButton>
+                  <>
+                    {!isOrderView && (
+                      <IconButton
+                        size="small"
+                        onClick={() =>
+                          setQuantity((prev) => Math.min(99, prev + 1))
+                        }
+                        sx={{ borderLeft: "1px solid", borderColor: "divider" }}
+                      >
+                        +
+                      </IconButton>
+                    )}
+                  </>
                 </Box>
               </Box>
             </Box>
 
-            <Box sx={{ display: "flex", gap: 2, mt: 4 }}>
-              <AppButton variant="primary">Add to Cart</AppButton>
-              <AppButton variant="secondary">Buy Now</AppButton>
-            </Box>
+            <>
+              {!isOrderView && (
+                <Box sx={{ display: "flex", gap: 2, mt: 4 }}>
+                  <AppButton variant="primary">Add to Cart</AppButton>
+                  <AppButton variant="secondary">Buy Now</AppButton>
+                </Box>
+              )}
+            </>
           </Box>
 
           {/* === Column 3: Delivery, Payment & Seller Info === */}
