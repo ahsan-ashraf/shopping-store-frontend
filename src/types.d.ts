@@ -42,6 +42,43 @@ export interface Order {
   category: string;
 }
 
+export interface Store {
+  id: string;
+  name: string;
+  category: string;
+  brand?: string;
+  bio?: string;
+  banner?: string;
+  icon?: string;
+  socials: {
+    youtube?: string;
+    facebook?: string;
+    instagram?: string;
+  };
+}
+export interface StoreStats {
+  date: string;
+  impressions: number;
+  views: number;
+  orders: number;
+  cancelRate: string;
+  successRate: string;
+  returnRate: string;
+}
+export interface Product {
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+  price: number;
+  addedDate: string;
+  views: number;
+  orders: number;
+  cancelations: number;
+  returns: number;
+  success: number;
+}
+
 export type Registration = "buyer" | "seller" | "admin" | "rider";
 export type SortOption = "latest" | "oldest" | "price_high" | "price_low";
 export type OrderStatus = "pending" | "inprogress" | "delivered" | "failed";

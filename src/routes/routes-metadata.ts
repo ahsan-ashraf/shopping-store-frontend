@@ -6,6 +6,7 @@ export const AppRoutes = Object.freeze({
   Profile: "/profile",
   Wishlist: "/wishlist",
   BuyerOrders: "/buyer-orders",
+  StoreDetails: "/store/:storeId",
   ProductDetails: "/product/:productId",
   PublishProduct: "/product/publish",
   RegisterStore: "/register/store",

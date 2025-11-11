@@ -16,6 +16,7 @@ import OrdersHistory from "../pages/order-history";
 import UserRegistration from "../pages/registration/user-registration";
 import PublishProduct from "../pages/product/publish-product";
 import StoreRegistration from "../pages/store-registration";
+import StoreDetails from "../pages/store-details/store-details";
 
 const AppRouter: React.FC = () => {
   return (
@@ -32,6 +33,7 @@ const AppRouter: React.FC = () => {
           <Route path={AppRoutes.Wishlist} element={<Wishlist />} />
           <Route path={AppRoutes.Cart} element={<Cart />} />
           <Route path={AppRoutes.BuyerOrders} element={<BuyerOrders />} />
+          <Route path={AppRoutes.StoreDetails} element={<StoreDetails />} />
           <Route path={AppRoutes.ProductDetails} element={<ProductDetails />} />
           <Route path={AppRoutes.PublishProduct} element={<PublishProduct />} />
           <Route
