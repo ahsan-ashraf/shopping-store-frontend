@@ -82,7 +82,7 @@ interface Props {
   isOrderView: boolean;
 }
 
-const ProductDetails: React.FC<Props> = ({ isOrderView = true }) => {
+const ProductDetails: React.FC<Props> = ({ isOrderView }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState(dummyProduct.colors[0]);
   const [selectedSize, setSelectedSize] = useState(dummyProduct.sizes[0]);
@@ -544,223 +544,227 @@ const ProductDetails: React.FC<Props> = ({ isOrderView = true }) => {
       </Paper>
 
       {/* ========== RATINGS & REVIEWS SECTION ========== */}
-      <Paper elevation={2} sx={{ mt: 4, p: 3 }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mb: 2,
-          }}
-        >
-          <Typography variant="h6" fontWeight="bold">
-            Ratings & Reviews
-          </Typography>
-
-          {/* Rating Filter */}
-          <FormControl size="small" sx={{ minWidth: 150 }}>
-            <InputLabel>Filter by Rating</InputLabel>
-            <Select
-              value={filterRating}
-              label="Filter by Rating"
-              onChange={(e) => setFilterRating(e.target.value)}
-            >
-              <MenuItem value="all">All Ratings</MenuItem>
-              <MenuItem value="5">5 Stars</MenuItem>
-              <MenuItem value="4">4 Stars</MenuItem>
-              <MenuItem value="3">3 Stars</MenuItem>
-              <MenuItem value="2">2 Stars</MenuItem>
-              <MenuItem value="1">1 Star</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-
-        <Divider sx={{ mb: 2 }} />
-
-        {/* Rating Summary Row */}
-        <Grid container spacing={3} alignItems="center">
-          {/* Left: Average Rating */}
-          <Grid sx={{ xs: 12, md: 4 }} textAlign="center">
-            <Typography variant="h2" fontWeight="bold">
-              4.6
-              <Typography
-                component="span"
-                sx={{ fontSize: "1.25rem", color: "text.secondary" }}
-              >
-                /5
-              </Typography>
-            </Typography>
-            <Rating value={4.6} precision={0.1} readOnly size="large" />
-            <Typography variant="body2" color="text.secondary">
-              301 Ratings
-            </Typography>
-          </Grid>
-
-          {/* Right: Rating Bars */}
-          {/* Right: Rating Bars */}
-          <Grid
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              flexGrow: 1,
-            }}
-          >
-            {[
-              { stars: 5, count: 261 },
-              { stars: 4, count: 7 },
-              { stars: 3, count: 9 },
-              { stars: 2, count: 9 },
-              { stars: 1, count: 15 },
-            ].map((item) => {
-              const total = 301;
-              const percent = (item.count / total) * 100;
-
-              return (
-                <Box
-                  key={item.stars}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    mt: 1,
-                    width: "25%",
-                  }}
-                >
-                  {/* Replace star count with actual Rating component */}
-                  <Rating
-                    value={item.stars}
-                    readOnly
-                    size="small"
-                    sx={{
-                      color: "gold",
-                      minWidth: 110, // keeps width consistent across rows
-                    }}
-                  />
-
-                  {/* Progress bar */}
-                  <Box
-                    sx={{
-                      flex: 1,
-                      height: 8,
-                      backgroundColor: "#e0e0e0",
-                      borderRadius: 4,
-                      overflow: "hidden",
-                      minWidth: 120,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: `${percent}%`,
-                        height: "100%",
-                        backgroundColor: "#fbc02d",
-                        borderRadius: 4,
-                        transition: "width 0.4s ease",
-                      }}
-                    />
-                  </Box>
-
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      width: 40,
-                      textAlign: "right",
-                      color: "text.secondary",
-                    }}
-                  >
-                    {item.count}
-                  </Typography>
-                </Box>
-              );
-            })}
-          </Grid>
-        </Grid>
-
-        {/* Reviews Section */}
-        <Box sx={{ mt: 4 }}>
-          {filteredReviews.map((review, index) => (
-            <Paper
-              key={index}
-              variant="outlined"
+      <>
+        {!isOrderView && (
+          <Paper elevation={2} sx={{ mt: 4, p: 3 }}>
+            <Box
               sx={{
-                p: 2,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
                 mb: 2,
-                borderRadius: 2,
-                backgroundColor: "background.paper",
               }}
             >
-              <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                <Typography variant="subtitle2" fontWeight="bold">
-                  {review.name}
-                </Typography>
-                {review.verified && (
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      ml: 1,
-                      color: "green",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    ✅ Verified Purchase
-                  </Typography>
-                )}
-                <Typography
-                  variant="body2"
-                  sx={{ ml: "auto", color: "text.secondary" }}
-                >
-                  {review.date}
-                </Typography>
-              </Box>
-
-              <Rating value={review.rating} readOnly size="small" />
-              <Typography variant="body2" sx={{ mt: 1 }}>
-                {review.text}
+              <Typography variant="h6" fontWeight="bold">
+                Ratings & Reviews
               </Typography>
 
-              {review.image && (
-                <Box
-                  component="img"
-                  src={review.image}
-                  alt="Review"
-                  sx={{
-                    mt: 1,
-                    width: 80,
-                    height: 80,
-                    borderRadius: 1,
-                    objectFit: "cover",
-                  }}
-                />
-              )}
+              {/* Rating Filter */}
+              <FormControl size="small" sx={{ minWidth: 150 }}>
+                <InputLabel>Filter by Rating</InputLabel>
+                <Select
+                  value={filterRating}
+                  label="Filter by Rating"
+                  onChange={(e) => setFilterRating(e.target.value)}
+                >
+                  <MenuItem value="all">All Ratings</MenuItem>
+                  <MenuItem value="5">5 Stars</MenuItem>
+                  <MenuItem value="4">4 Stars</MenuItem>
+                  <MenuItem value="3">3 Stars</MenuItem>
+                  <MenuItem value="2">2 Stars</MenuItem>
+                  <MenuItem value="1">1 Star</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
 
-              <Box
+            <Divider sx={{ mb: 2 }} />
+
+            {/* Rating Summary Row */}
+            <Grid container spacing={3} alignItems="center">
+              {/* Left: Average Rating */}
+              <Grid sx={{ xs: 12, md: 4 }} textAlign="center">
+                <Typography variant="h2" fontWeight="bold">
+                  4.6
+                  <Typography
+                    component="span"
+                    sx={{ fontSize: "1.25rem", color: "text.secondary" }}
+                  >
+                    /5
+                  </Typography>
+                </Typography>
+                <Rating value={4.6} precision={0.1} readOnly size="large" />
+                <Typography variant="body2" color="text.secondary">
+                  301 Ratings
+                </Typography>
+              </Grid>
+
+              {/* Right: Rating Bars */}
+              {/* Right: Rating Bars */}
+              <Grid
                 sx={{
-                  mt: 1,
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  flexDirection: "column",
+                  flexGrow: 1,
                 }}
               >
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                {[
+                  { stars: 5, count: 261 },
+                  { stars: 4, count: 7 },
+                  { stars: 3, count: 9 },
+                  { stars: 2, count: 9 },
+                  { stars: 1, count: 15 },
+                ].map((item) => {
+                  const total = 301;
+                  const percent = (item.count / total) * 100;
+
+                  return (
+                    <Box
+                      key={item.stars}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        mt: 1,
+                        width: "25%",
+                      }}
+                    >
+                      {/* Replace star count with actual Rating component */}
+                      <Rating
+                        value={item.stars}
+                        readOnly
+                        size="small"
+                        sx={{
+                          color: "gold",
+                          minWidth: 110, // keeps width consistent across rows
+                        }}
+                      />
+
+                      {/* Progress bar */}
+                      <Box
+                        sx={{
+                          flex: 1,
+                          height: 8,
+                          backgroundColor: "#e0e0e0",
+                          borderRadius: 4,
+                          overflow: "hidden",
+                          minWidth: 120,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: `${percent}%`,
+                            height: "100%",
+                            backgroundColor: "#fbc02d",
+                            borderRadius: 4,
+                            transition: "width 0.4s ease",
+                          }}
+                        />
+                      </Box>
+
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          width: 40,
+                          textAlign: "right",
+                          color: "text.secondary",
+                        }}
+                      >
+                        {item.count}
+                      </Typography>
+                    </Box>
+                  );
+                })}
+              </Grid>
+            </Grid>
+
+            {/* Reviews Section */}
+            <Box sx={{ mt: 4 }}>
+              {filteredReviews.map((review, index) => (
+                <Paper
+                  key={index}
+                  variant="outlined"
+                  sx={{
+                    p: 2,
+                    mb: 2,
+                    borderRadius: 2,
+                    backgroundColor: "background.paper",
+                  }}
                 >
-                  👍 {review.likes}
-                </Typography>
-                <AppButton size="small" sx={{ textTransform: "none" }}>
-                  Reply
-                </AppButton>
-              </Box>
-            </Paper>
-          ))}
-        </Box>
-        <Box sx={{ mt: 4 }}>
-          <Paper>
-            <ProductStats />
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                    <Typography variant="subtitle2" fontWeight="bold">
+                      {review.name}
+                    </Typography>
+                    {review.verified && (
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          ml: 1,
+                          color: "green",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        ✅ Verified Purchase
+                      </Typography>
+                    )}
+                    <Typography
+                      variant="body2"
+                      sx={{ ml: "auto", color: "text.secondary" }}
+                    >
+                      {review.date}
+                    </Typography>
+                  </Box>
+
+                  <Rating value={review.rating} readOnly size="small" />
+                  <Typography variant="body2" sx={{ mt: 1 }}>
+                    {review.text}
+                  </Typography>
+
+                  {review.image && (
+                    <Box
+                      component="img"
+                      src={review.image}
+                      alt="Review"
+                      sx={{
+                        mt: 1,
+                        width: 80,
+                        height: 80,
+                        borderRadius: 1,
+                        objectFit: "cover",
+                      }}
+                    />
+                  )}
+
+                  <Box
+                    sx={{
+                      mt: 1,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                    >
+                      👍 {review.likes}
+                    </Typography>
+                    <AppButton size="small" sx={{ textTransform: "none" }}>
+                      Reply
+                    </AppButton>
+                  </Box>
+                </Paper>
+              ))}
+            </Box>
+            <Box sx={{ mt: 4 }}>
+              <Paper>
+                <ProductStats />
+              </Paper>
+            </Box>
           </Paper>
-        </Box>
-      </Paper>
+        )}
+      </>
     </Container>
   );
 };

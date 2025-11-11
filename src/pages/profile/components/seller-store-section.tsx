@@ -3,6 +3,8 @@ import { Paper, Typography, Grid, Tooltip, Card } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useTheme } from "@mui/material/styles";
 import AppCard from "../../../components/ui/app-card";
+import { Link } from "react-router-dom";
+import { AppRoutes } from "../../../routes/routes-metadata";
 
 interface Store {
   id: string;
@@ -31,7 +33,13 @@ const SellerStoresSection: React.FC<SellerStoresSectionProps> = ({
 
       <Grid container spacing={2} justifyContent="center">
         {stores.map((store) => (
-          <Grid key={store.id} sx={{ width: 220 }}>
+          <Grid
+            key={store.id}
+            sx={{ width: 220, textDecoration: "none" }}
+            component={Link}
+            to={`${AppRoutes.StoreDetails}`}
+            // to={`${AppRoutes.StoreDetails}/${store.id}`} // TODO: do change it back later with proper store id in it.
+          >
             <AppCard
               image={store.image}
               title={store.name}
@@ -44,6 +52,8 @@ const SellerStoresSection: React.FC<SellerStoresSectionProps> = ({
         <Grid>
           <Tooltip title="Create New Store" arrow>
             <Card
+              component={Link}
+              to={AppRoutes.RegisterStore}
               onClick={onCreateStore}
               sx={{
                 width: 220,

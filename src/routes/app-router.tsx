@@ -18,6 +18,7 @@ import PublishProduct from "../pages/product/publish-product";
 import StoreRegistration from "../pages/store-registration";
 import StoreDetails from "../pages/store-details/store-details";
 import SellerDashboard from "../pages/seller-dashboard/seller-dashboard";
+import AdminDashboard from "../pages/admin/admin-dashboard";
 
 const AppRouter: React.FC = () => {
   return (
@@ -27,15 +28,26 @@ const AppRouter: React.FC = () => {
           <Route index element={<Home />} />
           <Route path={AppRoutes.About} element={<About />} />
           <Route path={AppRoutes.Contact} element={<Contact />} />
-          <Route path={AppRoutes.Registration} element={<UserRegistration />} />
+          <Route
+            path={`${AppRoutes.Registration}/:role`}
+            element={<UserRegistration />}
+          />
 
           {/* protected routes */}
+          <Route path={AppRoutes.Admin} element={<AdminDashboard />} />
           <Route path={AppRoutes.Profile} element={<Profile />} />
           <Route path={AppRoutes.Wishlist} element={<Wishlist />} />
           <Route path={AppRoutes.Cart} element={<Cart />} />
           <Route path={AppRoutes.BuyerOrders} element={<BuyerOrders />} />
           <Route path={AppRoutes.StoreDetails} element={<StoreDetails />} />
-          <Route path={AppRoutes.ProductDetails} element={<ProductDetails />} />
+          <Route
+            path={AppRoutes.ProductDetails}
+            element={<ProductDetails isOrderView={false} />}
+          />
+          <Route
+            path={AppRoutes.OrderDetails}
+            element={<ProductDetails isOrderView={true} />}
+          />
           <Route path={AppRoutes.PublishProduct} element={<PublishProduct />} />
           <Route
             path={AppRoutes.SellerDashboard}

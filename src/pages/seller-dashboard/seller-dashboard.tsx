@@ -22,6 +22,9 @@ import UndoIcon from "@mui/icons-material/Undo";
 import CancelIcon from "@mui/icons-material/Cancel";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import AppButton from "../../components/ui/app-button";
+import { useNavigate } from "react-router-dom";
+import { AppRoutes } from "../../routes/routes-metadata";
+import SellerStoresSection from "../profile/components/seller-store-section";
 
 interface Order {
   id: string;
@@ -58,16 +61,44 @@ const mockOrders: Order[] = [
     status: "riderOnWay",
   },
 ];
+const mockStores = [
+  {
+    id: "1",
+    name: "Gadget Galaxy",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+  },
+  {
+    id: "2",
+    name: "Tech Haven",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+  },
+  {
+    id: "3",
+    name: "Urban Style Hub",
+    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f",
+  },
+];
+const handleSelectStore = (storeId: string) => {
+  console.log("Go to store:", storeId);
+  // navigate(`/seller/store/${storeId}`);
+};
 
+const handleCreateStore = () => {
+  console.log("Redirect to create store page");
+  // navigate("/seller/store/create");
+};
 const SellerDashboard: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>(mockOrders);
-
+  const navigate = useNavigate();
   const handleStatusChange = (id: string, newStatus: Order["status"]) => {
     setOrders((prev) =>
       prev.map((order) =>
         order.id === id ? { ...order, status: newStatus } : order
       )
     );
+  };
+  const viewOrderDetails = () => {
+    navigate(AppRoutes.OrderDetails); // your route path
   };
 
   const highlights = [
@@ -170,7 +201,11 @@ const SellerDashboard: React.FC = () => {
                   </Select>
                 </TableCell>
                 <TableCell>
-                  <AppButton variant="primary" size="small">
+                  <AppButton
+                    variant="primary"
+                    size="small"
+                    onClick={viewOrderDetails}
+                  >
                     View
                   </AppButton>
                 </TableCell>
@@ -179,6 +214,11 @@ const SellerDashboard: React.FC = () => {
           </TableBody>
         </Table>
       </Paper>
+      <SellerStoresSection
+        stores={mockStores}
+        onSelectStore={handleSelectStore}
+        onCreateStore={handleCreateStore}
+      />
     </Container>
   );
 };

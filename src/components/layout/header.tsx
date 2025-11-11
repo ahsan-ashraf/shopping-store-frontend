@@ -109,7 +109,7 @@ const Header: React.FC = () => {
                 {/* Login Button */}
                 <Button
                   component={Link}
-                  to="/login"
+                  to={`${AppRoutes.Registration}/buyer`}
                   variant="contained"
                   sx={{ ml: 1, bgcolor: "#f57224", textTransform: "none" }}
                 >

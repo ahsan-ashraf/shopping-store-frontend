@@ -29,8 +29,52 @@ interface SidebarItem {
 }
 
 const sidebarItems: SidebarItem[] = [
-  { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
-  { label: "Orders", path: "/orders", icon: <ListAltIcon /> },
+  {
+    label: "Dashboard (Admin)",
+    path: AppRoutes.Admin,
+    icon: <DashboardIcon />,
+  },
+  {
+    label: "Dashboard (Seller)",
+    path: AppRoutes.SellerDashboard,
+    icon: <DashboardIcon />,
+  },
+  {
+    label: "Orders to deliver",
+    path: AppRoutes.RiderOrdersToDeliver,
+    icon: <DashboardIcon />,
+  },
+  {
+    label: "Return Requests",
+    path: AppRoutes.RiderOrdersReturnRequests,
+    icon: <DashboardIcon />,
+  },
+  {
+    label: "History",
+    path: AppRoutes.RiderOrderHistory,
+    icon: <DashboardIcon />,
+  },
+  {
+    label: "Profile",
+    path: AppRoutes.Profile,
+    icon: <DashboardIcon />,
+  },
+  {
+    label: "Register Seller",
+    path: `${AppRoutes.Registration}/seller`,
+    icon: <ListAltIcon />,
+  },
+  {
+    label: "Register Rider",
+    path: `${AppRoutes.Registration}/rider`,
+    icon: <ListAltIcon />,
+  },
+  {
+    label: "Register Admin",
+    path: `${AppRoutes.Registration}/admin`,
+    icon: <ListAltIcon />,
+  },
+  { label: "Orders", path: AppRoutes.BuyerOrders, icon: <ListAltIcon /> },
   { label: "Wishlist", path: "/wishlist", icon: <FavoriteIcon /> },
   { label: "Categories", path: "/categories", icon: <CategoryIcon /> },
   { label: "Home", path: AppRoutes.Home, icon: <HomeIcon /> },
