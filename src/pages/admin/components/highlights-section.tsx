@@ -95,29 +95,3 @@ const HighlightsSection: React.FC<HighlightsSectionProps> = ({
 };
 
 export default HighlightsSection;
-
-// =======================
-// ✅ SAMPLE USAGE
-// =======================
-
-// import HighlightsSection, { SAMPLE_HIGHLIGHTS } from "./HighlightsSection";
-//
-// const AdminDashboard = () => {
-//   return (
-//     <Box>
-//       <HighlightsSection highlights={SAMPLE_HIGHLIGHTS} />
-//     </Box>
-//   );
-// };
-//
-// export default AdminDashboard;
-
-const sortyMyArray = <T,>(array: T[], key: keyof T) => array;
-
-sortyMyArray(
-  [
-    { id: "name", name: "age", city: "asd" },
-    { id: "asd", name: "Asasd", city: "asdasd" },
-  ],
-  "city"
-);
