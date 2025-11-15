@@ -9,7 +9,6 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AssignmentReturnIcon from "@mui/icons-material/AssignmentReturn";
 import ErrorIcon from "@mui/icons-material/Error";
-import SectionHeader from "../../../components/ui/secion-header";
 
 // Type for highlight items
 export interface HighlightItem {
@@ -112,3 +111,13 @@ export default HighlightsSection;
 // };
 //
 // export default AdminDashboard;
+
+const sortyMyArray = <T,>(array: T[], key: keyof T) => array;
+
+sortyMyArray(
+  [
+    { id: "name", name: "age", city: "asd" },
+    { id: "asd", name: "Asasd", city: "asdasd" },
+  ],
+  "city"
+);
