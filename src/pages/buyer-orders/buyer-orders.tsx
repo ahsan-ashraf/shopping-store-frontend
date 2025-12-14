@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import type { SyntheticEvent } from "react";
-import {
-  Box,
-  Paper,
-  Tabs,
-  Tab,
-  FormControl,
-  Select,
-  MenuItem,
-  type SelectChangeEvent,
-  Typography,
-} from "@mui/material";
+import { Box, Paper, Tabs, Tab, FormControl, Select, MenuItem, type SelectChangeEvent, Typography } from "@mui/material";
 import SectionHeader from "../../components/ui/secion-header";
 import TabPanel from "./components/tab-panel";
 import ActiveOrders from "./components/active-orders";
@@ -38,12 +28,7 @@ const BuyerOrders: React.FC<OrdersPageProps> = () => {
       <SectionHeader title="Orders" />
 
       <Paper elevation={3} sx={{ px: 2, py: 1 }}>
-        <Tabs
-          value={tab}
-          onChange={handleChange}
-          aria-label="buyer orders tabs"
-          sx={{ "& .MuiTabs-flexContainer": { gap: 1 } }}
-        >
+        <Tabs value={tab} onChange={handleChange} aria-label="buyer orders tabs" sx={{ "& .MuiTabs-flexContainer": { gap: 1 } }}>
           <Tab label="Active Orders" id="orders-tab-0" />
           <Tab label="Completed Orders" id="orders-tab-1" />
           <Tab label="Returned Orders" id="orders-tab-2" />
@@ -59,15 +44,12 @@ const BuyerOrders: React.FC<OrdersPageProps> = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              p: 1.5,
+              p: 1.5
             }}
           >
             <Typography sx={{ fontWeight: "bold" }}>Sort</Typography>
             <FormControl size="small" sx={{ minWidth: 160 }}>
-              <Select<SortOption>
-                value={sortOption}
-                onChange={handleSortChange}
-              >
+              <Select<SortOption> value={sortOption} onChange={handleSortChange}>
                 <MenuItem value="latest">Latest Orders</MenuItem>
                 <MenuItem value="oldest">Oldest Orders</MenuItem>
                 <MenuItem value="price_high">Price: High to Low</MenuItem>
