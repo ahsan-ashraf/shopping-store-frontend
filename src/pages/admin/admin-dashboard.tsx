@@ -7,10 +7,14 @@ import BuyersTable from "./components/buyers";
 import RidersTable from "./components/riders";
 import SellersTable from "./components/sellers";
 import AdminsTable from "./components/admins";
+import axios from "axios";
 
 interface Props {}
 
 const Admin: React.FC<Props> = ({}) => {
+  // const url = "http://localhost:3000/admin-dashboard/riders-info?status=Active&pageNo=1&pageSize=30";
+  // const response = axios.get(url);
+
   return (
     <>
       <SectionHeader title="Admin" />

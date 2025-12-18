@@ -21,7 +21,7 @@ export interface UserProfile {
   companyPhone?: string;
   birthDate: string; // ISO
   gender: "male" | "female" | "other" | "";
-  role: "super admin" | "admin" | "seller" | "buyer" | "rider" | "";
+  role: Role;
 }
 
 export interface Order {
@@ -30,14 +30,7 @@ export interface Order {
   title: string;
   description: string;
   price: number;
-  status:
-    | "processing"
-    | "packing"
-    | "outForDelivery"
-    | "riderOnWay"
-    | "delivered"
-    | "returned"
-    | "canceled";
+  status: "processing" | "packing" | "outForDelivery" | "riderOnWay" | "delivered" | "returned" | "canceled";
   date: string;
   category: string;
 }
@@ -79,11 +72,15 @@ export interface Product {
   success: number;
 }
 
+export enum Role {
+  SuperAdmin,
+  Admin,
+  Seller,
+  Rider,
+  Buyer,
+}
+
 export type Registration = "buyer" | "seller" | "admin" | "rider";
 export type SortOption = "latest" | "oldest" | "price_high" | "price_low";
 export type OrderStatus = "pending" | "inprogress" | "delivered" | "failed";
-export type ReturnStatus =
-  | "pending"
-  | "inprogress"
-  | "completed"
-  | "awaiting_store";
+export type ReturnStatus = "pending" | "inprogress" | "completed" | "awaiting_store";

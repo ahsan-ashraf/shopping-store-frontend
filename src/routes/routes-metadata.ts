@@ -16,6 +16,7 @@ export const AppRoutes = Object.freeze({
   RiderOrdersToDeliver: "/rider/orders-to-deliver",
   RiderOrdersReturnRequests: "/rider/orders-return-requests",
   RiderOrderHistory: "/rider/orders-history",
-  Registration: "register",
+  Login: "/login",
+  Registration: "/register",
   Invalid: "*",
 });
