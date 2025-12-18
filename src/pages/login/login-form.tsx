@@ -1,12 +1,15 @@
 import React from "react";
-import { Container, Box, Typography, TextField, Button, Grid, Link } from "@mui/material";
+import { Container, Box, Typography, Button, Grid, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AppRoutes } from "../../routes/routes-metadata";
+import { AuthApiClient } from "../../api/auth-api";
+import AppInput from "../../components/ui/app-input";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const authApi = new AuthApiClient();
 
   const initialValues = {
     email: "",
@@ -20,8 +23,19 @@ const LoginForm: React.FC = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        const authData = await authApi.login({ email: values.email, password: values.password });
+        console.log("Logged in successfully:", authData);
+      } catch (err: any) {
+        if (err.response) {
+          console.error("Login error:", err.response.data.message || err.message);
+        } else if (err.request) {
+          console.error("No response from server. Please try again later.");
+        } else {
+          console.error("Error during login:", err.message);
+        }
+      }
     },
   });
 
@@ -44,7 +58,7 @@ const LoginForm: React.FC = () => {
           <Grid container sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
             {/* Email */}
             <Grid sx={{ flex: 1, minWidth: "100%" }}>
-              <TextField
+              <AppInput
                 fullWidth
                 label="Email"
                 name="email"
@@ -59,7 +73,7 @@ const LoginForm: React.FC = () => {
 
             {/* Password */}
             <Grid sx={{ flex: 1, minWidth: "100%" }}>
-              <TextField
+              <AppInput
                 fullWidth
                 label="Password"
                 name="password"

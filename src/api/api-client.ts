@@ -1,141 +1,112 @@
 import axios, { AxiosError } from "axios";
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import jsCookie from "js-cookie";
-import type { Role } from "../types";
-
-/* ---------------- types ---------------- */
 
 type AuthData = {
-  id: string;
-  name: string;
-  email: string;
-  role: Role;
   accessToken: string;
   refreshToken: string;
 };
 
 type Subscriber = (token: string | null) => void;
 
-/* ---------------- axios instance ---------------- */
+export class ApiClient {
+  baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-const API: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000/api",
-  withCredentials: true,
-  headers: { "Content-Type": "application/json" },
-});
+  private api: AxiosInstance;
+  private isRefreshing = false;
+  private subscribers: Subscriber[] = [];
 
-/* ---------------- cookie helpers ---------------- */
-
-const getAuthDataFromCookie = (): AuthData | null => {
-  try {
-    const raw = jsCookie.get("authData");
-    if (!raw) return null;
-    return JSON.parse(raw) as AuthData;
-  } catch {
-    return null;
-  }
-};
-
-const setAuthDataToCookie = (newAccessToken: string): void => {
-  const currentData = getAuthDataFromCookie();
-  if (currentData) {
-    const updated: AuthData = {
-      ...currentData,
-      accessToken: newAccessToken,
-    };
-
-    jsCookie.set("authData", JSON.stringify(updated), {
-      expires: 1 / 24,
+  constructor() {
+    this.api = axios.create({
+      baseURL: this.baseURL,
+      withCredentials: true,
+      headers: { "Content-Type": "application/json" },
     });
-  } else {
-    // No current data, clear the cookie
-    jsCookie.remove("authData");
+
+    this.setupInterceptors();
   }
-};
 
-/* ---------------- request interceptor ---------------- */
-
-API.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const authData = getAuthDataFromCookie();
-
-    if (authData?.accessToken) {
-      config.headers.Authorization = `Bearer ${authData.accessToken}`;
+  /* ---------------- cookie helpers ---------------- */
+  public getAuthData(): AuthData | null {
+    try {
+      const raw = jsCookie.get("authData");
+      if (!raw) return null;
+      return JSON.parse(raw) as AuthData;
+    } catch {
+      return null;
     }
+  }
 
-    return config;
-  },
-  (error: AxiosError) => Promise.reject(error)
-);
+  public setAuthData(newAccessToken: string): void {
+    const currentData = this.getAuthData();
+    if (currentData) {
+      const updated: AuthData = { ...currentData, accessToken: newAccessToken };
+      jsCookie.set("authData", JSON.stringify(updated), { expires: 1 / 24 });
+    } else {
+      jsCookie.remove("authData");
+    }
+  }
 
-/* ---------------- refresh handling ---------------- */
+  /* ---------------- interceptors ---------------- */
+  private setupInterceptors() {
+    this.api.interceptors.request.use(
+      (config: InternalAxiosRequestConfig) => {
+        const authData = this.getAuthData();
+        if (authData?.accessToken) {
+          config.headers.Authorization = `Bearer ${authData.accessToken}`;
+        }
+        return config;
+      },
+      (error: AxiosError) => Promise.reject(error)
+    );
 
-let isRefreshing = false;
-let subscribers: Subscriber[] = [];
+    this.api.interceptors.response.use(
+      (response: AxiosResponse) => response,
+      (error: AxiosError) => this.handleResponseError(error)
+    );
+  }
 
-const notifySubscribers = (newToken: string | null): void => {
-  subscribers.forEach((cb) => cb(newToken));
-  subscribers = [];
-};
+  private async handleResponseError(error: AxiosError) {
+    const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
-const addSubscriber = (cb: Subscriber): void => {
-  subscribers.push(cb);
-};
-
-const performTokenRefresh = async (): Promise<string> => {
-  const refreshClient = axios.create({
-    baseURL: "http://localhost:5000/api",
-    withCredentials: true,
-    headers: { "Content-Type": "application/json" },
-  });
-
-  const res = await refreshClient.post<{ accessToken: string }>("/auth/refresh-token");
-
-  const newAccessToken = res.data.accessToken;
-  setAuthDataToCookie(newAccessToken);
-
-  return newAccessToken;
-};
-
-/* ---------------- response interceptor ---------------- */
-
-API.interceptors.response.use(
-  (response: AxiosResponse) => response,
-  async (error: AxiosError) => {
-    const originalRequest = error.config as AxiosRequestConfig & {
-      _retry?: boolean;
-    };
+    // don't try refresh if the request is login
+    if (originalRequest.url?.includes("/auth/login")) {
+      return Promise.reject(error);
+    }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      if (isRefreshing) {
+      if (this.isRefreshing) {
         return new Promise((resolve) => {
-          addSubscriber((newToken) => {
+          this.subscribers.push((newToken) => {
             if (newToken && originalRequest.headers) {
               originalRequest.headers.Authorization = `Bearer ${newToken}`;
             }
-            resolve(API(originalRequest));
+            resolve(this.api(originalRequest));
           });
         });
       }
 
-      isRefreshing = true;
+      this.isRefreshing = true;
 
       try {
-        const newToken = await performTokenRefresh();
+        const newToken = await this.refreshToken();
+        this.isRefreshing = false;
 
-        isRefreshing = false;
-        notifySubscribers(newToken);
+        this.subscribers.forEach((cb) => cb(newToken));
+        this.subscribers = [];
 
         if (originalRequest.headers) {
           originalRequest.headers.Authorization = `Bearer ${newToken}`;
         }
 
-        return API(originalRequest);
+        return this.api(originalRequest);
       } catch (refreshErr) {
-        isRefreshing = false;
-        notifySubscribers(null);
+        this.isRefreshing = false;
+        this.subscribers.forEach((cb) => cb(null));
+        this.subscribers = [];
+
         jsCookie.remove("authData");
         return Promise.reject(refreshErr);
       }
@@ -143,6 +114,23 @@ API.interceptors.response.use(
 
     return Promise.reject(error);
   }
-);
 
-export default API;
+  /* ---------------- token refresh ---------------- */
+  public async refreshToken(): Promise<string> {
+    const refreshClient = axios.create({
+      baseURL: this.baseURL,
+      withCredentials: true,
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const res = await refreshClient.post<{ accessToken: string }>(`${this.baseURL}/auth/refresh-tokens`);
+    const newAccessToken = res.data.accessToken;
+    this.setAuthData(newAccessToken);
+    return newAccessToken;
+  }
+
+  /* ---------------- public axios instance ---------------- */
+  get instance(): AxiosInstance {
+    return this.api;
+  }
+}
