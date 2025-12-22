@@ -78,10 +78,14 @@ npm run dev
 ```
 
 ## 🎯 Why This Project Matters
-
 This project is built to demonstrate:</br>
 ✅ Real-world full-stack development</br>
 ✅ Enterprise-level backend design</br>
 ✅ Clean, scalable frontend architecture</br>
 ✅ Payment & cloud service integration</br>
 ✅ Attention to UX, performance & security</br>
+
+## 👨‍💻 Author
+Ahsan Ali</br>
+Backend-focused Full Stack Developer</br>
+Specializing in NestJS, PostgreSQL, React & scalable APIs</br>
