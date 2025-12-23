@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Box, Typography, Button, Grid, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AppRoutes } from "../../routes/routes-metadata";
 import AppInput from "../../components/ui/app-input";
+import { useAuth } from "../../providers/auth-provider";
+import { Role } from "../../types";
+import { useLoginMutation } from "../../tanstack/mutations/auth.mutations";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const { mutateAsync: login, isPending, error } = useLoginMutation();
 
   const initialValues = {
     email: "",
@@ -23,19 +27,47 @@ const LoginForm: React.FC = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        // const authData = await authApi.login({ email: values.email, password: values.password });
-        // console.log("Logged in successfully:", authData);
+        await login(values);
       } catch (err: any) {
         if (err.response) {
-          console.error("Login error:", err.response.data.message || err.message);
-        } else if (err.request) {
+          console.error("Login error:", err?.response?.data?.message || err?.message);
+        } else if (err?.request) {
           console.error("No response from server. Please try again later.");
         } else {
-          console.error("Error during login:", err.message);
+          console.error("Error during login:", err?.message);
         }
       }
     },
   });
+
+  const { user, isAuthenticated, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (isLoading || !isAuthenticated || !user) {
+      return;
+    }
+    switch (user.role) {
+      case Role.SuperAdmin:
+        navigate(AppRoutes.Admin, { replace: true });
+        break;
+      case Role.Admin:
+        navigate(AppRoutes.Admin, { replace: true });
+        break;
+      case Role.Buyer:
+        navigate(AppRoutes.Home, { replace: true });
+        break;
+      case Role.Seller:
+        navigate(AppRoutes.SellerDashboard, { replace: true });
+        break;
+      case Role.Rider:
+        navigate(AppRoutes.RiderOrdersToDeliver, { replace: true });
+        break;
+
+      default:
+        navigate(AppRoutes.Home, { replace: true });
+        break;
+    }
+  }, [user, isAuthenticated, isLoading, navigate]);
 
   return (
     <Container maxWidth="sm">
@@ -85,8 +117,8 @@ const LoginForm: React.FC = () => {
             </Grid>
 
             <Grid sx={{ flex: 1, minWidth: "100%" }}>
-              <Button type="submit" variant="contained" fullWidth disabled={!formik.dirty || !formik.isValid}>
-                Login
+              <Button type="submit" variant="contained" fullWidth disabled={!formik.dirty || !formik.isValid || isPending}>
+                {isPending ? "Logging in..." : "Login"}
               </Button>
             </Grid>
 

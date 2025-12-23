@@ -27,7 +27,7 @@ export class ApiClient {
   }
 
   /* ---------------- cookie helpers ---------------- */
-  public getAuthData(): AuthData | null {
+  public getAuthData = (): AuthData | null => {
     try {
       const raw = jsCookie.get("authData");
       if (!raw) return null;
@@ -35,9 +35,9 @@ export class ApiClient {
     } catch {
       return null;
     }
-  }
+  };
 
-  public setAuthData(newAccessToken: string): void {
+  public setAuthData = (newAccessToken: string): void => {
     const currentData = this.getAuthData();
     if (currentData) {
       const updated: AuthData = { ...currentData, accessToken: newAccessToken };
@@ -45,10 +45,10 @@ export class ApiClient {
     } else {
       jsCookie.remove("authData");
     }
-  }
+  };
 
   /* ---------------- interceptors ---------------- */
-  private setupInterceptors() {
+  private setupInterceptors = () => {
     this.api.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
         const authData = this.getAuthData();
@@ -64,9 +64,9 @@ export class ApiClient {
       (response: AxiosResponse) => response,
       (error: AxiosError) => this.handleResponseError(error)
     );
-  }
+  };
 
-  private async handleResponseError(error: AxiosError) {
+  private handleResponseError = async (error: AxiosError) => {
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
     // don't try refresh if the request is login
@@ -113,10 +113,10 @@ export class ApiClient {
     }
 
     return Promise.reject(error);
-  }
+  };
 
   /* ---------------- token refresh ---------------- */
-  public async refreshToken(): Promise<string> {
+  public refreshToken = async (): Promise<string> => {
     const refreshClient = axios.create({
       baseURL: this.baseURL,
       withCredentials: true,
@@ -127,7 +127,7 @@ export class ApiClient {
     const newAccessToken = res.data.accessToken;
     this.setAuthData(newAccessToken);
     return newAccessToken;
-  }
+  };
 
   /* ---------------- public axios instance ---------------- */
   get instance(): AxiosInstance {

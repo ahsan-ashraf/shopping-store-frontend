@@ -79,6 +79,16 @@ export enum Role {
   Rider,
   Buyer,
 }
+export enum OperationalState {
+  Active,
+  Blocked,
+  Suspended,
+}
+export enum ApprovalState {
+  Pending,
+  Approved,
+  Rejected,
+}
 
 export type Registration = "buyer" | "seller" | "admin" | "rider";
 export type SortOption = "latest" | "oldest" | "price_high" | "price_low";

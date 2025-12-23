@@ -17,27 +17,27 @@ class AuthApiClient {
     this.apiClient = new ApiClient();
   }
 
-  async login(data: LoginPayload): Promise<AuthData> {
+  login = async (data: LoginPayload): Promise<AuthData> => {
     const res = await this.apiClient.instance.post<AuthData>(`/auth/login`, data);
     this.apiClient.setAuthData(res.data.accessToken);
     return res.data;
-  }
+  };
 
-  async getMe() {
+  getMe = async () => {
     const res = await this.apiClient.instance.get(`/auth/me`);
     return res.data;
-  }
+  };
 
-  async logout(): Promise<void> {
+  logout = async (): Promise<void> => {
     await this.apiClient.instance.post("/auth/logout");
     this.apiClient.setAuthData(null as any);
-  }
+  };
 
-  async refreshToken(): Promise<string> {
+  refreshToken = async (): Promise<string> => {
     const accessToken = await this.apiClient.refreshToken();
     this.apiClient.setAuthData(accessToken);
     return accessToken;
-  }
+  };
 }
 
 export const authApi = new AuthApiClient();

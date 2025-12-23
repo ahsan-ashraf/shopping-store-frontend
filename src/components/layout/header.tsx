@@ -5,9 +5,11 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useThemeContext } from "../../context/theme-context";
 import { AppRoutes } from "../../routes/routes-metadata";
+import { useLogoutMutation } from "../../tanstack/mutations/auth.mutations";
+import { useAuth } from "../../providers/auth-provider";
 
 const navItems = [
   { label: "Home", path: AppRoutes.Home },
@@ -21,10 +23,25 @@ const Header: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { mutateAsync: logout, isPending, error } = useLogoutMutation();
+  const { setUser, setIsAuthenticated } = useAuth();
 
-  const logout = async () => {
-    // Implement logout functionality here
-    console.log("User logged out");
+  const logoutFun = async () => {
+    try {
+      await logout();
+      setUser(null);
+      setIsAuthenticated(false);
+      navigate(AppRoutes.Login, { replace: true });
+    } catch (err: any) {
+      if (err.response) {
+        console.error("Logout error:", err?.response?.data?.message || err?.message);
+      } else if (err?.request) {
+        console.error("No response from server. Please try again later.");
+      } else {
+        console.error("Error during logout:", err?.message);
+      }
+    }
   };
 
   // 🔹 Temporary cart count (replace with dynamic value later)
@@ -95,7 +112,7 @@ const Header: React.FC = () => {
                 </Button>
 
                 {/* Logout Button */}
-                <Button component={Link} to={`${AppRoutes.Login}`} variant="contained" color="error" onClick={logout}>
+                <Button variant="contained" color="error" onClick={logoutFun}>
                   Logout
                 </Button>
 

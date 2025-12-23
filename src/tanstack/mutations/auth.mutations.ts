@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { authApi } from "../api/auth-api";
-import { TanstackKeys } from "../_tanstackKeys/tanstack-keys";
+import { authApi } from "../../api/auth-api";
+import { TanstackKeys } from "../tanstack-keys";
 
 export const useLoginMutation = () => {
   const qc = useQueryClient();
@@ -18,7 +18,8 @@ export const useLogoutMutation = () => {
   return useMutation({
     mutationFn: authApi.logout,
     onSuccess: () => {
-      qc.removeQueries({ queryKey: [TanstackKeys.getMe] });
+      qc.invalidateQueries({ queryKey: [TanstackKeys.getMe] });
+      // qc.removeQueries({ queryKey: [TanstackKeys.getMe] });
     },
   });
 };

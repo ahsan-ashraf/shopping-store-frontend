@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { authApi } from "../../api/auth-api";
-import { TanstackKeys } from "../../_tanstackKeys/tanstack-keys";
+import { TanstackKeys } from "../tanstack-keys";
 
 export const useMeQuery = () => {
   return useQuery({

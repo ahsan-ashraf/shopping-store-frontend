@@ -3,12 +3,15 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import "./App.css";
 import ThemeContextProvider from "./context/theme-context";
 import AppRouter from "./routes/app-router";
+import AuthProvider from "./providers/auth-provider";
 
 function App() {
   return (
     <ThemeContextProvider>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <AppRouter />
+        <AuthProvider>
+          <AppRouter />
+        </AuthProvider>
       </LocalizationProvider>
     </ThemeContextProvider>
   );
