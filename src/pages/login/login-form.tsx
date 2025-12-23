@@ -4,12 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AppRoutes } from "../../routes/routes-metadata";
-import { AuthApiClient } from "../../api/auth-api";
 import AppInput from "../../components/ui/app-input";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
-  const authApi = new AuthApiClient();
 
   const initialValues = {
     email: "",
@@ -25,8 +23,8 @@ const LoginForm: React.FC = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const authData = await authApi.login({ email: values.email, password: values.password });
-        console.log("Logged in successfully:", authData);
+        // const authData = await authApi.login({ email: values.email, password: values.password });
+        // console.log("Logged in successfully:", authData);
       } catch (err: any) {
         if (err.response) {
           console.error("Login error:", err.response.data.message || err.message);

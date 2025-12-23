@@ -1,16 +1,5 @@
 import React, { useState } from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  IconButton,
-  Button,
-  Collapse,
-  useMediaQuery,
-  useTheme,
-  Badge,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, IconButton, Button, Collapse, useMediaQuery, useTheme, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
@@ -33,6 +22,11 @@ const Header: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const logout = async () => {
+    // Implement logout functionality here
+    console.log("User logged out");
+  };
+
   // 🔹 Temporary cart count (replace with dynamic value later)
   const cartCount = 3;
 
@@ -41,12 +35,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <AppBar
-        position="sticky"
-        color="inherit"
-        elevation={1}
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      >
+      <AppBar position="sticky" color="inherit" elevation={1} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           {/* Left: Store icon + name + wallet */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -95,39 +84,24 @@ const Header: React.FC = () => {
               <>
                 {/* Navigation Links */}
                 {navItems.slice(0, 3).map((item) => (
-                  <Button
-                    key={item.label}
-                    component={Link}
-                    to={item.path}
-                    color="inherit"
-                    sx={{ textTransform: "none", fontWeight: 500 }}
-                  >
+                  <Button key={item.label} component={Link} to={item.path} color="inherit" sx={{ textTransform: "none", fontWeight: 500 }}>
                     {item.label}
                   </Button>
                 ))}
 
                 {/* Login Button */}
-                <Button
-                  component={Link}
-                  to={`${AppRoutes.Registration}/buyer`}
-                  variant="contained"
-                  sx={{ ml: 1, bgcolor: "#f57224", textTransform: "none" }}
-                >
+                <Button component={Link} to={`${AppRoutes.Login}`} variant="contained" sx={{ ml: 1, bgcolor: "#f57224", textTransform: "none" }}>
                   Login
                 </Button>
 
+                {/* Logout Button */}
+                <Button component={Link} to={`${AppRoutes.Login}`} variant="contained" color="error" onClick={logout}>
+                  Logout
+                </Button>
+
                 {/* 🔹 Cart Icon with Badge */}
-                <IconButton
-                  component={Link}
-                  to="/cart"
-                  color="inherit"
-                  sx={{ ml: 1 }}
-                >
-                  <Badge
-                    badgeContent={cartCount}
-                    color="error"
-                    overlap="rectangular"
-                  >
+                <IconButton component={Link} to="/cart" color="inherit" sx={{ ml: 1 }}>
+                  <Badge badgeContent={cartCount} color="error" overlap="rectangular">
                     <ShoppingCartOutlinedIcon />
                   </Badge>
                 </IconButton>
@@ -140,10 +114,7 @@ const Header: React.FC = () => {
             ) : (
               <>
                 {/* Mobile Menu Icon */}
-                <IconButton
-                  color="inherit"
-                  onClick={() => setMenuOpen((prev) => !prev)}
-                >
+                <IconButton color="inherit" onClick={() => setMenuOpen((prev) => !prev)}>
                   <MenuIcon />
                 </IconButton>
               </>
